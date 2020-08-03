@@ -77,7 +77,7 @@ if( !empty($_POST['btn_submit']) ) {
         $password = htmlspecialchars( $_POST['password'], ENT_QUOTES);
     }
 
-    if( empty($error_message) ) {
+  if( empty($error_message) ) {
 
    // データベースに接続
    $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -90,18 +90,18 @@ if( !empty($_POST['btn_submit']) ) {
        $mysqli->set_charset('utf8');
 
        // データを登録するSQL作成
-       $sql = "INSERT INTO `baseball`(`firstname`, `lastname`, `username`, `email`, `zip`, `state`, `address1`, `address2`) VALUES ('".$firstname."', '".$lastname."', '".$username."', '".$email."', '".$zip."', '".$state."', '".$address1."', '".$address2."')";
+       $sql = "INSERT INTO `user`(`firstname`, `lastname`, `username`, `email`, `zip`, `state`, `address1`, `address2`, `password`) VALUES ('".$firstname."', '".$lastname."', '".$username."', '".$email."', '".$zip."', '".$state."', '".$address1."', '".$address2."', '".$password."')";
 
        // データを登録
        $res = $mysqli->query($sql);
 
        // データベースの検索を閉じる
        $mysqli->close();
+
    }
-}
+  }
 }
 ?>
-
 
 <!doctype html>
 <html lang="ja" >
@@ -112,7 +112,7 @@ if( !empty($_POST['btn_submit']) ) {
     <link href="form-validation.css" rel="stylesheet">
     <link href="../example.css" rel="stylesheet">
   </head>
-  <body  class="bg-light" >
+  <body class="bg-light" >
     <a id="skippy" class="sr-only sr-only-focusable" href="#content">
   <div class="container">
     <span class="skiplink-text">Skip to main content</span>
@@ -123,6 +123,11 @@ if( !empty($_POST['btn_submit']) ) {
   margin-right: auto;
   margin-left: auto;
 }
+.must {
+  color: #e00;
+  font-weight: normal;
+  padding: 0 0 0 2px;
+  font-family: "メイリオ", "ＭＳ Ｐゴシック", Osaka, "ヒラギノ角ゴ Pro W3";
 }
 </style>
 
@@ -138,13 +143,14 @@ if( !empty($_POST['btn_submit']) ) {
     <div class="col-md-8 order-md-1">
       <!-- <h4 class="mb-3">Billing address</h4> -->
       <h4 class="mb-3"></h4>
+      <h7><span class="must">※</span>の付いている項目は必ず入力してください</h7>
   
       <form method="post" class="needs-validation" novalidate>
 
         <div class="row">
           <div class="col-md-6 mb-3">
             <!-- <label for="firstName">First name</label> -->
-            <label for="firstName">名字</label>
+            <label for="firstName">名字<span class="must">※</span></label>
             <input type="text" class="form-control" id="firstName" name="firstname" placeholder="" value="" required>
             <div class="invalid-feedback">
               <!-- Valid first name is required. -->
@@ -154,7 +160,7 @@ if( !empty($_POST['btn_submit']) ) {
 
           <div class="col-md-6 mb-3">
             <!-- <label for="lastName">Last name</label> -->
-            <label for="lastName">名前</label>
+            <label for="lastName">名前<span class="must">※</span></label>
             <input type="text" class="form-control" id="lastName" name="lastname" placeholder="" value="" required>
             <div class="invalid-feedback">
               <!-- Valid last name is required. -->
@@ -165,7 +171,7 @@ if( !empty($_POST['btn_submit']) ) {
 
         <div class="mb-3">
           <!-- <label for="username">Username</label> -->
-          <label for="username">ユーザーネーム</label>
+          <label for="username">ユーザーネーム<span class="must">※</span></label>
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text">@</span>
@@ -180,7 +186,7 @@ if( !empty($_POST['btn_submit']) ) {
 
         <div class="mb-3">
           <!-- <label for="email">Email <span class="text-muted">(Optional)</span></label> -->
-          <label for="email">メールアドレス <span class="text-muted">（オプション）</span></label>
+          <label for="email">メールアドレス<span class="must">※</span><span class="text-muted">（オプション）</span></label>
           <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
           <div class="invalid-feedback">
             <!-- Please enter a valid email address for shipping updates. -->
@@ -191,7 +197,7 @@ if( !empty($_POST['btn_submit']) ) {
         <div class="row">
           <div class="col-md-5 mb-3">
             <!-- <label for="zip">Zip</label> -->
-            <label for="zip">郵便番号</label>
+            <label for="zip">郵便番号<span class="must">※</span></label>
             <input type="text" class="form-control" id="zip" name="zip" placeholder="" onKeyUp="AjaxZip3.zip2addr('zip', '', 'state', 'address1');" required>
             <div class="invalid-feedback">
               <!-- Zip code required. -->
@@ -201,7 +207,7 @@ if( !empty($_POST['btn_submit']) ) {
 
           <div class="col-md-7 mb-3">
             <!-- <label for="state">State</label> -->
-            <label for="state">都道府県</label>
+            <label for="state">都道府県<span class="must">※</span></label>
             <select class="custom-select d-block w-100" id="state" name="state" required>
               <!-- <option value="">Choose...</option> -->
               <option value="">選択してください</option>
@@ -263,12 +269,12 @@ if( !empty($_POST['btn_submit']) ) {
 
         <div class="mb-3">
           <!-- <label for="address">Address</label> -->
-          <label for="address">住所</label>
+          <label for="address">住所<span class="must">※</span></label>
           <!-- <input type="text" class="form-control" id="address" placeholder="1234 Main St" required> -->
           <input type="text" class="form-control" id="address" name="address1" placeholder="東京都千代田区千代田1-1" required>
           <div class="invalid-feedback">
             <!-- Please enter your shipping address. -->
-            送り先住所を入力してください。
+            住所を入力してください。
           </div>
         </div>
 
@@ -280,11 +286,16 @@ if( !empty($_POST['btn_submit']) ) {
         </div>
 
         <div class="form-group">
-          <label for="passwd">パスワード</label>
+          <label for="passwd">パスワード<span class="must">※</span></label>
           <input type="password" id="passwd" name="password" class="form-control" required>
         </div>
 
-        <input type="submit" class="btn btn-outline-primary" name="btn_submit" value="登録">
+        <div class="form-group">
+          <label for="passwd">パスワード（確認）<span class="must">※</span></label>
+          <input type="password" id="passwd" name="passwordConfirm" class="form-control" required>
+        </div>
+
+        <input type="submit" class="btn btn-outline-primary" name="btn_submit" onClick="location.href='./mypage.php?todo_id=<?php echo $value['id'];?>'" value="登録">
       </form>
 
   <footer class="my-5 pt-5 text-muted text-center text-small">
@@ -300,6 +311,22 @@ if( !empty($_POST['btn_submit']) ) {
   </footer>
 </div>
 
+<script>
+  var form = document.forms[0];
+  form.onsubmit = function() {
+    // エラーメッセージをクリアする
+    form.password.setCustomValidity("");
+    // パスワードの一致確認
+    if (form.password.value != form.passwordConfirm.value) {
+      // 一致していなかったら、エラーメッセージを表示する
+      form.password.setCustomValidity("パスワードと確認用パスワードが一致しません");
+    }
+  };
+  // 入力値チェックエラーが発生したときの処理
+  form.addEventListener("invalid", function() {
+    document.getElementById("errorMessage").innerHTML = "入力値にエラーがあります";
+  }, false);
+</script>
 <script src="../../assets/js/vendor/holder.min.js"></script>
 <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields

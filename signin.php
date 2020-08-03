@@ -1,3 +1,49 @@
+<?php
+
+// データベースの接続情報
+define( 'DB_HOST', 'localhost');
+define( 'DB_USER', 'root');
+define( 'DB_PASS', '');
+define( 'DB_NAME', 'baseball');
+
+// タイムゾーン設定
+date_default_timezone_set('Asia/Tokyo');
+
+session_start();
+
+//①エラーメッセージの初期状態を空に
+$err_msg = "";
+
+//②サブミットボタンが押されたときの処理
+if (isset($_POST['login'])) {
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+//③データが渡ってきた場合の処理
+  try {
+    $db = new PDO('mysql:host=localhost; dbname=baseball','root','');
+    $sql = 'select count(*) from baseball where email=? and password=?';
+    $stmt = $db->prepare($sql);
+    $stmt->execute(array($email,$password));
+    $result = $stmt->fetch();
+    $stmt = null;
+    $db = null;
+//④ログイン認証ができたときの処理
+    if ($result[0] != 0){
+      header('Location: http://localhost/baseball/home.php');
+    exit;
+//⑤アカウント情報が間違っていたときの処理
+    }else{
+      $err_msg = "アカウント情報が間違っています。";
+    }
+//⑥データが渡って来なかったときの処理
+  }catch (PDOExeption $e) {
+    echo $e->getMessage();
+    exit;
+  }
+}
+
+?>
+
 <!doctype html>
 <html lang="ja" >
   <head>
@@ -14,18 +60,18 @@
   </div>
 </a>
 
-    <form class="form-signin">
+    <form method="post" class="form-signin">
   <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
   <!-- <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1> -->
   <h1 class="h3 mb-3 font-weight-normal">サインインする</h1>
   <!-- <label for="inputEmail" class="sr-only">Email address</label> -->
   <label for="inputEmail" class="sr-only">メールアドレス</label>
   <!-- <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus> -->
-  <input type="email" id="inputEmail" class="form-control" placeholder="メールアドレス" required autofocus>
+  <input type="email" id="inputEmail" class="form-control" name="email" placeholder="メールアドレス" required autofocus>
   <!-- <label for="inputPassword" class="sr-only">Password</label> -->
   <label for="inputPassword" class="sr-only">パスワード</label>
   <!-- <input type="password" id="inputPassword" class="form-control" placeholder="Password" required> -->
-  <input type="password" id="inputPassword" class="form-control" placeholder="パスワード" required>
+  <input type="password" id="inputPassword" class="form-control" name="password" placeholder="パスワード" required>
   <div class="checkbox mb-3">
     <label>
       <!-- <input type="checkbox" value="remember-me"> Remember me -->
@@ -33,7 +79,10 @@
     </label>
   </div>
   <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> -->
-  <button class="btn btn-lg btn-primary btn-block" type="submit">サインイン</button>
+  <button class="btn btn-lg btn-primary btn-block" type="submit" name="login">サインイン</button>
+
+  <a href="http://localhost/baseball/register.php">新しいアカウントを作成する</a>
+
   <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
 </form>
 
