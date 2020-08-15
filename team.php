@@ -125,7 +125,7 @@ if( !empty($_POST['btn_submit']) ) {
        $mysqli->set_charset('utf8');
 
        // データを登録するSQL作成
-       $sql = "INSERT INTO `team`(`teamname`, `est`, `r_firstname`, `r_lastname`, `c_firstname`, `c_lastname`, `s_firstname`, `s_lastname`, `member`, `age`, `email`, `pref`, `city`,  `password`) VALUES ('".$teamname."', '".$est."', '".$r_firstname."', '".$r_lastname."', '".$c_firstname."', '".$c_lastname."', '".$s_firstname."', '".$s_lastname."','".$member."', '".$age."', '".$email."', '".$pref."', '".$city."', '".$password."')";
+       $sql = "INSERT INTO team (teamname, est, r_firstname, r_lastname, c_firstname, c_lastname, s_firstname, s_lastname, member, age, email, pref, city,  password) VALUES ('".$teamname."', '".$est."', '".$r_firstname."', '".$r_lastname."', '".$c_firstname."', '".$c_lastname."', '".$s_firstname."', '".$s_lastname."','".$member."', '".$age."', '".$email."', '".$pref."', '".$city."', '".$password."')";
 
        // データを登録
        $res = $mysqli->query($sql);

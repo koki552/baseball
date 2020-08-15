@@ -1,108 +1,3 @@
-<?php
-
-// データベースの接続情報
-define( 'DB_HOST', 'localhost');
-define( 'DB_USER', 'root');
-define( 'DB_PASS', '');
-define( 'DB_NAME', 'baseball');
-
-// タイムゾーン設定
-date_default_timezone_set('Asia/Tokyo');
-
-session_start();
-
-// 投稿の登録
-if( !empty($_POST['btn_submit']) ) {
-
-    // 名字の入力チェック
-    if( empty($_POST['firstname']) ) {
-      $error_message[] = '';
-  } else {
-      $firstname = htmlspecialchars( $_POST['firstname'], ENT_QUOTES);
-  }
-
-    // 名前の入力チェック
-    if( empty($_POST['lastname']) ) {
-        $error_message[] = '';
-    } else {
-        $lastname = htmlspecialchars( $_POST['lastname'], ENT_QUOTES);
-    }
-
-    // ユーザーネームの入力チェック
-    if( empty($_POST['username']) ) {
-      $error_message[] = '';
-  } else {
-      $username = htmlspecialchars( $_POST['username'], ENT_QUOTES);
-  }
-
-      // メールアドレスの入力チェック
-      if( empty($_POST['email']) ) {
-        $error_message[] = '';
-    } else {
-        $email = htmlspecialchars( $_POST['email'], ENT_QUOTES);
-    }
-
-      // 郵便番号の入力チェック
-      if( empty($_POST['zip']) ) {
-        $error_message[] = '';
-    } else {
-        $zip = htmlspecialchars( $_POST['zip'], ENT_QUOTES);
-    }
-
-      // 都道府県の入力チェック
-      if( empty($_POST['state']) ) {
-        $error_message[] = '';
-    } else {
-        $state = htmlspecialchars( $_POST['state'], ENT_QUOTES);
-    }
-
-      // 住所の入力チェック
-      if( empty($_POST['address1']) ) {
-        $error_message[] = '';
-    } else {
-        $address1 = htmlspecialchars( $_POST['address1'], ENT_QUOTES);
-    }
-
-      // 住所の入力チェック
-      if( empty($_POST['address2']) ) {
-        $error_message[] = '';
-    } else {
-        $address2 = htmlspecialchars( $_POST['address2'], ENT_QUOTES);
-    }
-    
-      // パスワードの入力チェック
-      if( empty($_POST['password']) ) {
-        $error_message[] = '';
-    } else {
-        $password = htmlspecialchars( $_POST['password'], ENT_QUOTES);
-    }
-
-  if( empty($error_message) ) {
-
-   // データベースに接続
-   $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-   // 接続エラーの確認
-   if( $mysqli->connect_errno) {
-       $error_message[] = '書き込みに失敗しました。エラー番号 '.$mysqli->connect_errno.' : '.$mysqli->connect_error;
-   } else {
-       // 文字コード設定
-       $mysqli->set_charset('utf8');
-
-       // データを登録するSQL作成
-       $sql = "INSERT INTO `user`(`firstname`, `lastname`, `username`, `email`, `zip`, `state`, `address1`, `address2`, `password`) VALUES ('".$firstname."', '".$lastname."', '".$username."', '".$email."', '".$zip."', '".$state."', '".$address1."', '".$address2."', '".$password."')";
-
-       // データを登録
-       $res = $mysqli->query($sql);
-
-       // データベースの検索を閉じる
-       $mysqli->close();
-
-   }
-  }
-}
-?>
-
 <!doctype html>
 <html lang="ja" >
   <head>
@@ -145,7 +40,7 @@ if( !empty($_POST['btn_submit']) ) {
       <h4 class="mb-3"></h4>
       <h7><span class="must">※</span>の付いている項目は必ず入力してください</h7>
   
-      <form method="post" class="needs-validation" novalidate>
+      <form action="confirm.php" method="post" class="needs-validation" novalidate>
 
         <div class="row">
           <div class="col-md-6 mb-3">
@@ -295,7 +190,7 @@ if( !empty($_POST['btn_submit']) ) {
           <input type="password" id="passwd" name="passwordConfirm" class="form-control" required>
         </div>
 
-        <input type="submit" class="btn btn-outline-primary" name="btn_submit" onClick="location.href='./mypage.php?todo_id=<?php echo $value['id'];?>'" value="登録">
+        <input type="submit" class="btn btn-outline-primary" name="btn_submit" onClick="location.href='mypage.php?todo_id=<?php echo $value['id'];?>'" value="登録">
       </form>
 
   <footer class="my-5 pt-5 text-muted text-center text-small">

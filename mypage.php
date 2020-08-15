@@ -86,40 +86,32 @@ session_start();
   <table class="table">
   <tbody>
     <tr>
-      <td class="title">チーム名</td>
+      <td class="title">ユーザーネーム</td>
       <td class="content"></td>
     </tr>
     <tr>
-      <td>設立年</td>
+      <td>名前</td>
       <td></td>
     </tr>
     <tr>
-      <td>代表者指名</td>
+      <td>メールアドレス</td>
       <td></td>
     </tr>
     <tr>
-      <td>主将指名</td>
+      <td>パスワード</td>
       <td></td>
     </tr>
     <tr>
-      <td>副将指名</td>
+      <td>郵便番号</td>
       <td></td>
     </tr>
     <tr>
-      <td>チーム人数</td>
+      <td>住所</td>
       <td></td>
     </tr>
     <tr>
-      <td>チーム平均年齢</td>
+      <td>住所2</td>
       <td></td>
-    </tr>
-    <tr>
-      <td>活動場所</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>メンバー募集</td>
-      <td>募集中<a href="http://localhost/baseball/recruit.php">入団希望者はこちら</a></td>
     </tr>
   </tbody>
 </table>

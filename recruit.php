@@ -181,19 +181,19 @@ if( !empty($_POST['btn_submit']) ) {
         <div class="form-group">
         <label for="exampleFormControlTextarea1">ポジション<span class="must">※</span></label><br>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+          <input class="form-check-input" type="checkbox" name="position[]" id="inlineCheckbox1" value="option1">
           <label class="form-check-label" for="inlineCheckbox1">ピッチャー</label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+          <input class="form-check-input" type="checkbox" name="position[]"  id="inlineCheckbox2" value="option2">
           <label class="form-check-label" for="inlineCheckbox2">キャッチャー</label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+          <input class="form-check-input" type="checkbox" name="position[]"  id="inlineCheckbox3" value="option3">
           <label class="form-check-label" for="inlineCheckbox3">内野手</label>
         </div>
         <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option4">
+          <input class="form-check-input" type="checkbox" name="position[]"  id="inlineCheckbox3" value="option4">
           <label class="form-check-label" for="inlineCheckbox4">外野手</label>
         </div>
         </div>
