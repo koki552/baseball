@@ -2,15 +2,15 @@
 // セッションの開始
 session_start();
 
-$firstname = htmlspecialchars( $_POST['firstname'], ENT_QUOTES);
-$lastname = htmlspecialchars( $_POST['lastname'], ENT_QUOTES);
-$username = htmlspecialchars( $_POST['username'], ENT_QUOTES);
-$email = htmlspecialchars( $_POST['email'], ENT_QUOTES);
-$zip = htmlspecialchars( $_POST['zip'], ENT_QUOTES);
-$state = htmlspecialchars( $_POST['state'], ENT_QUOTES);
-$address1 = htmlspecialchars( $_POST['address1'], ENT_QUOTES);
-$address2 = htmlspecialchars( $_POST['address2'], ENT_QUOTES);
-$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+$firstname = $_POST['firstname'];
+$lastname = $_POST['lastname'];
+$username = $_POST['username'];
+$email = $_POST['email'];
+$zip = $_POST['zip'];
+$state = $_POST['state'];
+$address1 = $_POST['address1'];
+$address2 = $_POST['address2'];
+$password = $_POST['password'];
 
 // 入力値をセッション変数に格納
 $_SESSION['firstname'] = $firstname;
