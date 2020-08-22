@@ -1,3 +1,11 @@
+<?php
+
+require_once('config.php');
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,12 +16,15 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>My Page</title>
+  <title>BASEBALL</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
+
+<style>
+</style>
 
 <body>
 
@@ -40,9 +51,24 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="http://localhost/baseball/signin.php">Login</a>
+            <a class="nav-link" href="#">
+              <?php
+              function h($s){
+                return htmlspecialchars($s, ENT_QUOTES, 'utf-8');
+              }
+              //ログイン済みの場合
+              if (isset($_SESSION['email'])) {
+                echo h($_SESSION['email']) . "様";
+                exit;
+              } else {
+                echo "<li class='nav-item'><a class='nav-link' href='http://localhost/baseball/signup.php'>Login</a></li>";
+              }
+              ?>
+            </a>  
           </li>
+
         </ul>
       </div>
     </div>

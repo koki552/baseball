@@ -7,8 +7,7 @@ function h($s){
 session_start();
 //ログイン済みの場合
 if (isset($_SESSION['email'])) {
-  echo 'ようこそ' .  h($_SESSION['email']) . "さん<br>";
-  echo "<a href='http://localhost/baseball/logout.php'>ログアウトはこちら。</a>";
+  header( "Location: http://localhost/baseball/home.php" ) ;
   exit;
 }
 
@@ -23,12 +22,13 @@ if (isset($_SESSION['email'])) {
     <link href="signin.css" rel="stylesheet">
     <link href="../example.css" rel="stylesheet">
   </head>
-  <body  class="text-center" >
-    <a id="skippy" class="sr-only sr-only-focusable" href="#content">
-  <div class="container">
-    <span class="skiplink-text">Skip to main content</span>
-  </div>
-</a>
+
+<body  class="text-center" >
+  <a id="skippy" class="sr-only sr-only-focusable" href="#content">
+    <div class="container">
+      <span class="skiplink-text">Skip to main content</span>
+    </div>
+  </a>
 
 <form action="login.php" method="post" class="form-signin">
 
@@ -60,7 +60,7 @@ if (isset($_SESSION['email'])) {
   <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
 </form>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script>
   window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery-slim.min.js"><\/script>')
 </script><script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script><script src="/docs/4.5/assets/js/vendor/anchor.min.js"></script>
@@ -69,5 +69,6 @@ if (isset($_SESSION['email'])) {
 <script src="/docs/4.5/assets/js/src/application.js"></script>
 <script src="/docs/4.5/assets/js/src/search.js"></script>
 <script src="/docs/4.5/assets/js/src/ie-emulation-modes-warning.js"></script>
-  </body>
+</body>
+
 </html>

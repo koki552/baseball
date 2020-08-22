@@ -27,14 +27,10 @@ if (!isset($row['email'])) {
 if (password_verify($_POST['password'], $row['password'])) {
   session_regenerate_id(true); //session_idを新しく生成し、置き換える
   $_SESSION['email'] = $row['email'];
-  echo 'ログインしました';
+  header( "Location: http://localhost/baseball/home.php" ) ;
 } else {
     echo 'メールアドレス又はパスワードが間違っています。';
-    echo $_POST['password'];
-    echo qqqqq;
-    echo $row['password'];
-    echo qqqqq;
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    echo $password;
   return false;
 }
+
+?>
