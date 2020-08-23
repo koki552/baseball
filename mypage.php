@@ -1,15 +1,12 @@
 <?php
 
+session_start();
+
 // データベースの接続情報
 define( 'DB_HOST', 'localhost');
 define( 'DB_USER', 'root');
 define( 'DB_PASS', '');
 define( 'DB_NAME', 'baseball');
-
-// タイムゾーン設定
-date_default_timezone_set('Asia/Tokyo');
-
-session_start();
 
 ?>
 
@@ -47,36 +44,8 @@ session_start();
 
 <body>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-    <div class="container">
-      <a class="navbar-brand" href="http://localhost/baseball/home.php">BASEBALL</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://localhost/baseball/signin.php">Login</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <!-- header -->
+  <?php include( $_SERVER['DOCUMENT_ROOT'] . '/header.php'); ?>
 
   <!-- Page Content -->
   <div class="container">

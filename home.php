@@ -24,6 +24,11 @@ session_start();
 </head>
 
 <style>
+.btn-secondary {
+  color: rgba(255,255,255,.5);
+  background-color: #343a40!important;
+  border-color: #343a40!important;
+}
 </style>
 
 <body>
@@ -53,20 +58,19 @@ session_start();
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <?php
-              function h($s){
-                return htmlspecialchars($s, ENT_QUOTES, 'utf-8');
-              }
-              //ログイン済みの場合
-              if (isset($_SESSION['email'])) {
-                echo h($_SESSION['email']) . "様";
-                exit;
-              } else {
-                echo "<li class='nav-item'><a class='nav-link' href='http://localhost/baseball/signup.php'>Login</a></li>";
-              }
-              ?>
-            </a>  
+          <?php if (isset($_SESSION['email'])) :?>
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <?php echo ($_SESSION['email']) . "様"; ?>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="http://localhost/baseball/mypage.php">My Page</a>
+                <a class="dropdown-item" href="http://localhost/baseball/logout.php">Logout</a>
+              </div>
+            </div>
+          <?php else: ?>
+            <li class='nav-item'><a class='nav-link' href='http://localhost/baseball/signup.php'>Login</a></li>
+          <?php endif; ?>
           </li>
 
         </ul>

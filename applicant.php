@@ -69,7 +69,7 @@ if( $mysqli->connect_errno) {
         <?php if( !empty( $applicant_array) ): ?>
         <?php foreach( $applicant_array as $value ): ?>
         <tr></tr>
-        <td><?php echo "<a href="."recruit_u.php?recruit_id=$value[id]".">$value[firstname]</a>"; ?></td>
+        <td><?php echo "<a href="."recruit_u.php?recruit_id=$value[id]".">$value[firstname]$value[lastname]</a>"; ?></td>
         <?php endforeach; ?>
         <?php endif; ?>
       </tr>

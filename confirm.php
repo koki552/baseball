@@ -22,6 +22,9 @@ $_SESSION['state'] = $state;
 $_SESSION['address1'] = $address1;
 $_SESSION['address2'] = $address2;
 $_SESSION['password'] = $password;
+
+
+
 ?>
 
 <!DOCTYPE html>

@@ -78,13 +78,38 @@ if( $mysqli->connect_errno) {
     <tbody>
       <tr>
         <?php if( !empty( $applicant_array) ): ?>
-        <td></td>
-        <td><?php echo $applicant_array['firstname']; ?></td>
+        <td>名前</td>
+        <td><?php echo $applicant_array['firstname']; ?><?php echo $applicant_array['lastname']; ?></td>
+        <?php endif; ?>
+      </tr>
+      <tr>
+        <?php if( !empty( $applicant_array) ): ?>
+        <td>年齢</td>
+        <td><?php echo $applicant_array['age']; ?></td>
+        <?php endif; ?>
+      </tr>
+      <tr>
+        <?php if( !empty( $applicant_array) ): ?>
+        <td>メールアドレス</td>
+        <td><?php echo $applicant_array['email']; ?></td>
+        <?php endif; ?>
+      </tr>
+      <tr>
+        <?php if( !empty( $applicant_array) ): ?>
+        <td>野球歴</td>
+        <td><?php echo $applicant_array['experience']; ?></td>
+        <?php endif; ?>
+      </tr>
+      <tr>
+        <?php if( !empty( $applicant_array) ): ?>
+        <td>お問い合わせ内容</td>
+        <td><?php echo $applicant_array['comment']; ?></td>
         <?php endif; ?>
       </tr>
     </tbody>
     </table>
-
+    <button type="button" class="btn btn-outline-secondary" onclick="history.back()">戻る</button>
+    <input type="submit" class="btn btn-outline-primary" name="btn_submit" onClick="location.href='mypage.php?todo_id=<?php echo $value['id'];?>'" value="確認">
   </div>
 
     <!-- Optional JavaScript -->
