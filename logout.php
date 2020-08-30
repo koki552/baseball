@@ -2,9 +2,9 @@
 session_start();
 $output = '';
 if (isset($_SESSION["email"])) {
-  $output = 'Logoutしました。';
+  header( "Location: http://localhost/baseball/home.php" ) ;
 } else {
-  $output = 'SessionがTimeoutしました。';
+  header( "Location: http://localhost/baseball/home.php" ) ;
 }
 //セッション変数のクリア
 $_SESSION = array();

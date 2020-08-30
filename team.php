@@ -1,143 +1,3 @@
-<?php
-
-// データベースの接続情報
-define( 'DB_HOST', 'localhost');
-define( 'DB_USER', 'root');
-define( 'DB_PASS', '');
-define( 'DB_NAME', 'baseball');
-
-// タイムゾーン設定
-date_default_timezone_set('Asia/Tokyo');
-
-session_start();
-
-// 投稿の登録
-if( !empty($_POST['btn_submit']) ) {
-
-    // チーム名の入力チェック
-    if( empty($_POST['teamname']) ) {
-      $error_message[] = '';
-  } else {
-      $teamname = htmlspecialchars( $_POST['teamname'], ENT_QUOTES);
-  }
-
-      // 設立年の入力チェック
-    if( empty($_POST['est']) ) {
-        $error_message[] = '';
-  } else {
-        $est = htmlspecialchars( $_POST['est'], ENT_QUOTES);
-  }
-
-    // 代表者名字の入力チェック
-    if( empty($_POST['r_firstname']) ) {
-        $error_message[] = '';
-  } else {
-        $r_firstname = htmlspecialchars( $_POST['r_firstname'], ENT_QUOTES);
-  }
-
-    // 代表者名前の入力チェック
-    if( empty($_POST['r_lastname']) ) {
-      $error_message[] = '';
-  } else {
-      $r_lastname = htmlspecialchars( $_POST['r_lastname'], ENT_QUOTES);
-  }
-
-      // 主将名字の入力チェック
-    if( empty($_POST['c_firstname']) ) {
-        $error_message[] = '';
-  } else {
-        $c_firstname = htmlspecialchars( $_POST['c_firstname'], ENT_QUOTES);
-  }
-
-    // 主将名前の入力チェック
-    if( empty($_POST['c_lastname']) ) {
-      $error_message[] = '';
-  } else {
-      $c_lastname = htmlspecialchars( $_POST['c_lastname'], ENT_QUOTES);
-  }
-
-    // 副将名字の入力チェック
-    if( empty($_POST['s_firstname']) ) {
-        $error_message[] = '';
-  } else {
-      $s_firstname = htmlspecialchars( $_POST['s_firstname'], ENT_QUOTES);
-  }
-  
-    // 副将名前の入力チェック
-    if( empty($_POST['s_lastname']) ) {
-      $error_message[] = '';
-  } else {
-      $s_lastname = htmlspecialchars( $_POST['s_lastname'], ENT_QUOTES);
-  }
-
-    // チーム人数の入力チェック
-    if( empty($_POST['member']) ) {
-      $error_message[] = '';
-  } else {
-      $member = htmlspecialchars( $_POST['member'], ENT_QUOTES);
-  }
-
-    // チーム平均年齢の入力チェック
-    if( empty($_POST['age']) ) {
-      $error_message[] = '';
-  } else {
-    $age = htmlspecialchars( $_POST['age'], ENT_QUOTES);
-  }
-
-    // メールアドレスの入力チェック
-    if( empty($_POST['email']) ) {
-      $error_message[] = '';
-  } else {
-    $email = htmlspecialchars( $_POST['email'], ENT_QUOTES);
-  }
-
-    // 都道府県の入力チェック
-    if( empty($_POST['pref']) ) {
-      $error_message[] = '';
-  } else {
-      $pref = htmlspecialchars( $_POST['pref'], ENT_QUOTES);
-  }
-
-    // 住所の入力チェック
-    if( empty($_POST['city']) ) {
-      $error_message[] = '';
-  } else {
-      $city = htmlspecialchars( $_POST['city'], ENT_QUOTES);
-  }
-
-    // パスワードの入力チェック
-    if( empty($_POST['password']) ) {
-      $error_message[] = '';
-  } else {
-      $password = htmlspecialchars( $_POST['password'], ENT_QUOTES);
-  }
-
-  if( empty($error_message) ) {
-
-   // データベースに接続
-   $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-   // 接続エラーの確認
-   if( $mysqli->connect_errno) {
-       $error_message[] = '書き込みに失敗しました。エラー番号 '.$mysqli->connect_errno.' : '.$mysqli->connect_error;
-   } else {
-       // 文字コード設定
-       $mysqli->set_charset('utf8');
-
-       // データを登録するSQL作成
-       $sql = "INSERT INTO team (teamname, est, r_firstname, r_lastname, c_firstname, c_lastname, s_firstname, s_lastname, member, age, email, pref, city,  password) VALUES ('".$teamname."', '".$est."', '".$r_firstname."', '".$r_lastname."', '".$c_firstname."', '".$c_lastname."', '".$s_firstname."', '".$s_lastname."','".$member."', '".$age."', '".$email."', '".$pref."', '".$city."', '".$password."')";
-
-       // データを登録
-       $res = $mysqli->query($sql);
-
-       // データベースの検索を閉じる
-       $mysqli->close();
-
-   }
-  }
-}
-?>
-
 <!doctype html>
 <html lang="ja" >
   <head>
@@ -166,6 +26,9 @@ if( !empty($_POST['btn_submit']) ) {
 }
 </style>
 
+<!-- header -->
+<?php include( $_SERVER['DOCUMENT_ROOT'] . '/baseball/header.php'); ?>
+
   <div class="container">
   <div class="py-5 text-center">
     <img class="d-block mx-auto mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
@@ -180,7 +43,7 @@ if( !empty($_POST['btn_submit']) ) {
       <h4 class="mb-3"></h4>
       <h7><span class="must">※</span>の付いている項目は必ず入力してください</h7>
 
-      <form method="post" class="needs-validation" novalidate>
+      <form action="confirm_team.php" method="post" class="needs-validation" novalidate>
 
         <div class="row">
           <div class="col-md-12 mb-3">

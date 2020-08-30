@@ -12,6 +12,7 @@ $state = htmlspecialchars( $_SESSION['state'], ENT_QUOTES);
 $address1 = htmlspecialchars( $_SESSION['address1'], ENT_QUOTES);
 $address2 = htmlspecialchars( $_SESSION['address2'], ENT_QUOTES);
 $password = password_hash($_SESSION['password'], PASSWORD_DEFAULT);
+$team = $_SESSION['team'];
 
 // データベースの接続情報
 define( 'DB_HOST', 'localhost');
@@ -21,9 +22,9 @@ define( 'DB_NAME', 'baseball');
 
 // データベースに接続
 $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
+ 
 // データを登録するSQL作成
-$sql = "INSERT INTO `user`(`firstname`, `lastname`, `username`, `email`, `zip`, `state`, `address1`, `address2`, `password`) VALUES ('".$firstname."', '".$lastname."', '".$username."', '".$email."', '".$zip."', '".$state."', '".$address1."', '".$address2."', '".$password."')";
+$sql = "INSERT INTO `user`(`firstname`, `lastname`, `username`, `email`, `zip`, `state`, `address1`, `address2`, `password`, `team`) VALUES ('".$firstname."', '".$lastname."', '".$username."', '".$email."', '".$zip."', '".$state."', '".$address1."', '".$address2."', '".$password."', '".$team."')";
 
 // データを登録
 $res = $mysqli->query($sql);

@@ -11,6 +11,7 @@ $state = $_POST['state'];
 $address1 = $_POST['address1'];
 $address2 = $_POST['address2'];
 $password = $_POST['password'];
+$team = 0;
 
 // 入力値をセッション変数に格納
 $_SESSION['firstname'] = $firstname;
@@ -22,6 +23,7 @@ $_SESSION['state'] = $state;
 $_SESSION['address1'] = $address1;
 $_SESSION['address2'] = $address2;
 $_SESSION['password'] = $password;
+$_SESSION['team'] = $team;
 
 ?>
 

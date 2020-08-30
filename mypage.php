@@ -1,4 +1,5 @@
 <?php
+
 // セッションの開始
 session_start();
 
@@ -15,14 +16,17 @@ $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if( $mysqli->connect_errno) {
   $error_message[] = 'データの読み込みに失敗しました。エラー番号 '.$mysqli->connect_errno.' : '.$mysqli->connect_error;
 } else {
-  $sql = "SELECT `id`, `firstname`, `lastname`, `username`, `email`, `zip`, `state`, `address1`, `address2`, `password` FROM `user` WHERE `email`="$_SESSION['email']"";
+
+  $sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password FROM user WHERE email ='".$_SESSION['email']."'";
   $res = $mysqli->query($sql);
-  echo $sql;
 
   if($res) {
-    $user_array = $res->fetch_all(MYSQLI_ASSOC);
-    echo $sql;
-  } 
+    $user_array = $res->fetch_assoc();
+  }else {
+
+      // データが読み込めなかったら一覧に戻る
+      header("Location: ./home.php");
+    }
     $mysqli->close();
 }
 
@@ -46,17 +50,29 @@ if( $mysqli->connect_errno) {
 </head>
 
 <style>
-  .title{
-    width: 30%;
-  }
-  .content{
-    width: 70%;
-  }
   a {
     padding-left: 20px;
   }
   .userpage{
     text-align: center;
+  }
+  .col-2 {
+    float: left;
+  }
+  .col-10 {
+    float: right;
+  }
+  .col-2 ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+  }
+  .col-2 h5 {
+    text-align: center;
+  }
+  .sidebar_li {
+    padding: 5px 0;
+    color: #646464;
   }
 </style>
 
@@ -65,49 +81,84 @@ if( $mysqli->connect_errno) {
   <!-- header -->
   <?php include( $_SERVER['DOCUMENT_ROOT'] . '/baseball/header.php'); ?>
 
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="http://localhost/baseball/home.php">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">My Page</li>
+  </ol>
+  </nav>
+
 <!-- Page Content -->
 <div class="container">
-
-  <br><h4 class="userpage">登録情報</h4><br>
+    <br><h4><?php echo ($_SESSION['email']) . "様の登録情報"; ?>
+    <br><h5 class="userpage">会員登録情報</h5><br>
   
-  <table class="table">
-  <tbody>
-    <tr>
-        <td class="title">ユーザーネーム</td>
-        <td class="content"><?php echo $user_array['username']; ?></td>
-    </tr>
+      <div class = "col-10">
+        <table class="table">
+          <tbody>
+            <tr>
+              <?php if( !empty( $user_array) ): ?>
+                <td class="title">ユーザーネーム</td>
+                <td class="content"><?php echo $user_array['username']; ?></td>
+              <?php endif; ?>
+            </tr>
+            <tr>
+              <?php if( !empty( $user_array) ): ?>
+                <td class>名前</td>
+                <td class><?php echo $user_array['firstname']; ?><?php echo $user_array['lastname']; ?></td>
+              <?php endif; ?>
+            </tr>
+            <tr>
+            <?php if( !empty( $user_array) ): ?>
+              <td>メールアドレス</td>
+              <td><?php echo ($_SESSION['email']); ?></td>
+            <?php endif; ?>
+            </tr>
+            <tr>
+            <?php if( !empty( $user_array) ): ?>
+              <td>郵便番号</td>
+              <td><?php echo $user_array['zip']; ?></td>
+            <?php endif; ?>
+            </tr>
+            <tr>
+              <?php if( !empty( $user_array) ): ?>
+                <td>住所</td>
+                <td><?php echo $user_array['address1']; ?></td>
+                <?php endif; ?>
+              </tr>
+              <tr>
+                <?php if( !empty( $user_array) ): ?>
+                  <td>住所2</td>
+                  <td><?php echo $user_array['address2']; ?></td>
+                  <?php endif; ?>
+                </tr>
+                <tr>
+                <?php if( !empty( $user_array) ): ?>
+                  <td>パスワード</td>
+                  <td><?php echo $user_array['password']; ?></td>
+                <?php endif; ?>
+                </tr>
+              </tbody>
+        </table>
+      </div>
 
-    <tr>
-      <?php if( !empty( $user_array) ): ?>
-        <td class="title">名前</td>
-        <td class="content"><?php echo $value['firstname']; ?></td>
-      <?php endif; ?>
-    </tr>
-    <tr>
-      <td>メールアドレス</td>
-      <td><?php echo ($_SESSION['email']); ?></td>
-    </tr>
-    <tr>
-      <td>パスワード</td>
-      <td><?php echo ($_SESSION['password']); ?></td>
-    </tr>
-    <tr>
-      <td>郵便番号</td>
-      <td><?php echo ($_SESSION['zip']); ?></td>
-    </tr>
-    <tr>
-      <td>住所</td>
-      <td><?php echo ($_SESSION['address1']); ?></td>
-    </tr>
-    <tr>
-      <td>住所2</td>
-      <td><?php echo ($_SESSION['address2']); ?></td>
-    </tr>
-  </tbody>
-  </table>
+    <!-- sidebar -->
+      <div class="col-2">
+        <h5>会員登録情報</h5>
+        <ul>
+          <li><a class="sidebar_li" href="http://localhost/baseball/mypage.php">会員登録情報</a><li>
+          <li><a class="sidebar_li" href="http://localhost/baseball/userscore.php">個人成績</a></li>
+        </ul>
+        <hr>
+        <h5>チーム情報</h5>
+        <ul>
+          <li><a class="sidebar_li" href="http://localhost/baseball/myteam.php">マイチーム</a><li>
+          <li><a class="sidebar_li" href="#">個人成績</a></li>
+        </ul>
+      </div>
 </div>
-
-  <!-- Bootstrap core JavaScript -->
+ 
+<!-- Bootstrap core JavaScript -->
   <script src="vendor/jquery/jquery.slim.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
