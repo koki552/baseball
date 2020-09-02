@@ -1,4 +1,5 @@
 <?php
+
 // セッションの開始
 session_start();
 
@@ -57,7 +58,7 @@ $_SESSION['comment'] = $comment;
 
 <br><h4 class="userpage">個人情報</h4><br>
 
-<form action="submit_t.php" method="post">
+<form action="submit_recruit.php" method="post">
 <table class="table">
 <tbody>
   <tr>

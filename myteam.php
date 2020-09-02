@@ -17,12 +17,12 @@ if( $mysqli->connect_errno) {
     $error_message[] = 'データの読み込みに失敗しました。エラー番号 '.$mysqli->connect_errno.' : '.$mysqli->connect_error;
   } else {
   
-    $sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team FROM user WHERE email ='".$_SESSION['email']."' and team = 0 ";
+    $sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team FROM user WHERE email ='".$_SESSION['email']."'";
     $res = $mysqli->query($sql);
   
     if($res) {
-      $myteam_array = $res->fetch_assoc();
-
+        $team_array = $res->fetch_assoc();
+        
     }else {
         // データが読み込めなかったらページ移動
         header("Location: ./mypage.php");
@@ -30,7 +30,12 @@ if( $mysqli->connect_errno) {
       $mysqli->close();
   }
 
-
+  if($team_array['team'] == 0 ) {
+     header("Location: ./teamselect.php");
+  }
+    else {
+        header("Location: ./myteam.php");
+    }
 
 ?>
 

@@ -1,3 +1,10 @@
+<?php
+
+// セッションの開始
+session_start();
+
+?>
+
 <!doctype html>
 <html lang="ja" >
   <head>

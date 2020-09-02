@@ -6,10 +6,35 @@ define( 'DB_USER', 'root');
 define( 'DB_PASS', '');
 define( 'DB_NAME', 'baseball');
 
-// タイムゾーン設定
-date_default_timezone_set('Asia/Tokyo');
-
 session_start();
+
+if( !empty($_GET['team_id']) && empty($_POST['team_id'])) {
+
+  $team_id = (int)htmlspecialchars($_GET['team_id'], ENT_QUOTES);
+  
+  // データベースに接続
+  $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+// 接続エラーの確認
+if( $mysqli->connect_errno) {
+  $error_message[] = 'データベースの接続に失敗しました。エラー番号 '.$mysqli->connect_errno.' : '.$mysqli->connect_error;
+} else {
+
+  // データの読み込み
+  $sql = "SELECT * FROM team WHERE id = $team_id";
+  $res = $mysqli->query($sql);
+
+  if( $res ) {
+      $team_array = $res->fetch_assoc();
+  } else {
+
+      // データが読み込めなかったら一覧に戻る
+      header("Location: ./teamselect.php");
+  }
+
+  $mysqli->close();
+ } 
+}
 
 ?>
 
@@ -60,35 +85,51 @@ session_start();
   <tbody>
     <tr>
       <td class="title">チーム名</td>
-      <td class="content"></td>
+      <?php if( !empty( $team_array) ): ?>
+        <td class="content"><?php echo $team_array['teamname'] ?></td>
+      <?php endif; ?>
     </tr>
     <tr>
       <td>設立年</td>
-      <td></td>
+      <?php if( !empty( $team_array) ): ?>
+        <td><?php echo $team_array['est'] ?></td>
+      <?php endif; ?>
     </tr>
     <tr>
       <td>代表者指名</td>
-      <td></td>
+      <?php if( !empty( $team_array) ): ?>
+        <td><?php echo $team_array['r_firstname'] ?><?php echo $team_array['r_lastname'] ?></td>
+      <?php endif; ?>
     </tr>
     <tr>
       <td>主将指名</td>
-      <td></td>
+      <?php if( !empty( $team_array) ): ?>
+       <td><?php echo $team_array['c_firstname'] ?><?php echo $team_array['c_lastname'] ?></td>
+      <?php endif; ?>
     </tr>
     <tr>
       <td>副将指名</td>
-      <td></td>
+      <?php if( !empty( $team_array) ): ?>
+        <td><?php echo $team_array['s_firstname'] ?><?php echo $team_array['s_lastname'] ?></td>
+      <?php endif; ?>
     </tr>
     <tr>
       <td>チーム人数</td>
-      <td></td>
+      <?php if( !empty( $team_array) ): ?>
+        <td><?php echo $team_array['member'] ?></td>
+      <?php endif; ?>
     </tr>
     <tr>
       <td>チーム平均年齢</td>
-      <td></td>
+      <?php if( !empty( $team_array) ): ?>
+        <td><?php echo $team_array['age'] ?></td>
+      <?php endif; ?>
     </tr>
     <tr>
       <td>活動場所</td>
-      <td></td>
+      <?php if( !empty( $team_array) ): ?>
+        <td><?php echo $team_array['pref'] ?><?php echo $team_array['city'] ?></td>
+      <?php endif; ?>
     </tr>
     <tr>
       <td>メンバー募集</td>
