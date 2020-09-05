@@ -1,5 +1,4 @@
 <?php
-
 // セッションの開始
 session_start();
  
@@ -16,7 +15,7 @@ $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if( $mysqli->connect_errno) {
     $error_message[] = 'データの読み込みに失敗しました。エラー番号 '.$mysqli->connect_errno.' : '.$mysqli->connect_error;
 } else {
-    $sql = "SELECT `id`, `teamname`, `est`, `r_firstname`, `r_lastname`, `c_firstname`, `c_lastname`, `s_firstname`, `s_lastname`, `member`, `age`, `email`, `pref`, `city`, `password` FROM `team`";
+    $sql = "SELECT `id`, `teamname`, `est`, `r_userid`, `r_firstname`, `r_lastname`, `c_firstname`, `c_lastname`, `s_firstname`, `s_lastname`, `member`, `age`, `pref`, `city`, `password` FROM `team`";
     $res = $mysqli->query($sql);
 
     if($res) {
@@ -48,6 +47,13 @@ if( $mysqli->connect_errno) {
 
   <!-- header -->
   <?php include( $_SERVER['DOCUMENT_ROOT'] . '/baseball/header.php'); ?>
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="./home.php">Home</a></li>
+    <li class="breadcrumb-item"><a href="./teamselect.php">チームセレクト</a></li>
+    <li class="breadcrumb-item active" aria-current="page">チーム一覧</li>
+  </ol>
+</nav>
 
   <!-- Page Content -->
   <div class="container">

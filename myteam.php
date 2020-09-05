@@ -34,7 +34,7 @@ if( $mysqli->connect_errno) {
      header("Location: ./teamselect.php");
   }
     else {
-        header("Location: ./myteam.php");
+        header("Location: ./myteampage.php");
     }
 
 ?>

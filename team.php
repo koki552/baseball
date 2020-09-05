@@ -3,6 +3,33 @@
 // セッションの開始
 session_start();
 
+// データベースの接続情報
+define( 'DB_HOST', 'localhost');
+define( 'DB_USER', 'root');
+define( 'DB_PASS', '');
+define( 'DB_NAME', 'baseball');
+
+// データベースに接続
+$mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+// 接続エラーの確認
+if( $mysqli->connect_errno) {
+  $error_message[] = 'データの読み込みに失敗しました。エラー番号 '.$mysqli->connect_errno.' : '.$mysqli->connect_error;
+} else {
+
+  $sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password FROM user WHERE email ='".$_SESSION['email']."'";
+  $res = $mysqli->query($sql);
+
+  if($res) {
+    $user_array = $res->fetch_assoc();
+  }else {
+
+      // データが読み込めなかったら一覧に戻る
+      header("Location: ./home.php");
+    }
+    $mysqli->close();
+}
+
 ?>
 
 <!doctype html>
@@ -35,6 +62,13 @@ session_start();
 
 <!-- header -->
 <?php include( $_SERVER['DOCUMENT_ROOT'] . '/baseball/header.php'); ?>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="./home.php">Home</a></li>
+    <li class="breadcrumb-item"><a href="./mypage.php">My Page</a></li>
+    <li class="breadcrumb-item active" aria-current="page">チーム登録</li>
+  </ol>
+</nav>
 
   <div class="container">
   <div class="py-5 text-center">
@@ -116,7 +150,9 @@ session_start();
           <div class="col-md-6 mb-3">
             <!-- <label for="firstName">First name</label> -->
             <label for="firstName">代表者名字<span class="must">※</span></label>
-            <input type="text" class="form-control" id="firstName" name="r_firstname" placeholder="" value="" required>
+            <?php if( !empty( $user_array) ): ?>
+            <input type="text" class="form-control" id="firstName" name="r_firstname" placeholder="" value="<?php echo $user_array['firstname']?>" required readonly>
+            <?php endif; ?>
             <div class="invalid-feedback">
               <!-- Valid first name is required. -->
               代表者名字を入力してください。
@@ -126,7 +162,7 @@ session_start();
           <div class="col-md-6 mb-3">
             <!-- <label for="lastName">Last name</label> -->
             <label for="lastName">代表者名前<span class="must">※</span></label>
-            <input type="text" class="form-control" id="lastName" name="r_lastname" placeholder="" value="" required>
+            <input type="text" class="form-control" id="lastName" name="r_lastname" placeholder="" value="<?php echo $user_array['lastname']?>" required readonly>
             <div class="invalid-feedback">
               <!-- Valid last name is required. -->
               代表者名前を入力してください。
@@ -248,16 +284,6 @@ session_start();
             <option value="70-79歳">70-79歳</option>
             <option value="80歳以上">80歳以上</option>
             </select>
-        </div>
-
-        <div class="mb-3">
-          <!-- <label for="email">Email <span class="text-muted">(Optional)</span></label> -->
-          <label for="email">メールアドレス<span class="must">※</span><span class="text-muted"></span></label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
-          <div class="invalid-feedback">
-            <!-- Please enter a valid email address for shipping updates. -->
-            有効なメールアドレスを入力してください。
-          </div>
         </div>
 
         <div class="row">

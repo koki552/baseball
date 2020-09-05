@@ -1,5 +1,4 @@
 <?php
-
 // データベースの接続情報
 define( 'DB_HOST', 'localhost');
 define( 'DB_USER', 'root');
@@ -75,6 +74,14 @@ if( $mysqli->connect_errno) {
 
   <!-- Navigation -->
   <?php include('header.php'); ?>
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="./home.php">Home</a></li>
+    <li class="breadcrumb-item"><a href="./teamselect.php">チームセレクト</a></li>
+    <li class="breadcrumb-item"><a href="./teamcatalog.php">チーム一覧</a></li>
+    <li class="breadcrumb-item active" aria-current="page">チーム情報</li>
+  </ol>
+  </nav>
 
   <!-- Page Content -->
   <div class="container">
@@ -132,8 +139,10 @@ if( $mysqli->connect_errno) {
       <?php endif; ?>
     </tr>
     <tr>
-      <td>メンバー募集</td>
-      <td>募集中<a href="http://localhost/baseball/recruit.php">入団希望者はこちら</a></td>
+      <?php if( !empty( $team_array) ): ?>
+        <td>メンバー募集</td>
+        <td>募集中<?php echo "<a href="."recruit.php?team_id=$team_array[id]".">入団希望者はこちら</a>"; ?></td>
+      <?php endif; ?>
     </tr>
   </tbody>
 </table>

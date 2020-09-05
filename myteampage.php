@@ -12,23 +12,22 @@ define( 'DB_NAME', 'baseball');
 // データベースに接続
 $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-// 接続エラーの確認
-if( $mysqli->connect_errno) {
-  $error_message[] = 'データの読み込みに失敗しました。エラー番号 '.$mysqli->connect_errno.' : '.$mysqli->connect_error;
-} else {
-
-  $sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password FROM user WHERE email ='".$_SESSION['email']."'";
-  $res = $mysqli->query($sql);
-
-  if($res) {
+// user情報呼び出し
+$sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team FROM user WHERE email ='".$_SESSION['email']."'";
+$res = $mysqli->query($sql);
+if($res) {
     $user_array = $res->fetch_assoc();
-  }else {
+  }
 
-      // データが読み込めなかったら一覧に戻る
-      header("Location: ./home.php");
-    }
-    $mysqli->close();
+// team情報呼び出し
+$sql ="SELECT `id`, `teamname`, `est`, `r_userid`, `r_firstname`, `r_lastname`, `c_firstname`, `c_lastname`, `s_firstname`, `s_lastname`, `member`, `age`, `pref`, `city`, `password` FROM `team` WHERE r_userid ='".$user_array['id']."'";
+$res = $mysqli->query($sql);
+if($res) {
+  $team_array = $res->fetch_assoc();
 }
+
+// データベースの検索を閉じる
+$mysqli->close();
 
 ?>
 
@@ -42,7 +41,7 @@ if( $mysqli->connect_errno) {
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>BASEBALL MY PAGE</title>
+  <title>BASEBALL MY TEAM PAGE</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -84,58 +83,69 @@ if( $mysqli->connect_errno) {
   <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="http://localhost/baseball/home.php">Home</a></li>
-    <li class="breadcrumb-item active" aria-current="page">My Page</li>
+    <li class="breadcrumb-item active" aria-current="page">My Team Page</li>
   </ol>
   </nav>
 
 <!-- Page Content -->
 <div class="container">
     <br><h4><?php echo ($_SESSION['email']) . "様の登録情報"; ?>
-    <br><h5 class="userpage">会員登録情報</h5><br>
+    <br><h5 class="userpage">チーム情報</h5><br>
   
       <div class = "col-10">
         <table class="table">
           <tbody>
             <tr>
-              <?php if( !empty( $user_array) ): ?>
-                <td class="title">ユーザーネーム</td>
-                <td class="content"><?php echo $user_array['username']; ?></td>
+              <?php if( !empty( $team_array) ): ?>
+                <td class="title">チーム名</td>
+                <td class="content"><?php echo $team_array['teamname']; ?></td>
               <?php endif; ?>
             </tr>
             <tr>
-              <?php if( !empty( $user_array) ): ?>
-                <td class>名前</td>
-                <td class><?php echo $user_array['firstname']; ?><?php echo $user_array['lastname']; ?></td>
+            <?php if( !empty( $team_array) ): ?>
+              <td>設立年</td>
+              <td><?php echo $team_array['age']; ?></td>
+            <?php endif; ?>
+            </tr>
+            <tr>
+              <?php if( !empty( $team_array) ): ?>
+                <td class>代表者名前</td>
+                <td class><?php echo $team_array['r_firstname']; ?><?php echo $team_array['r_lastname']; ?></td>
               <?php endif; ?>
             </tr>
             <tr>
-            <?php if( !empty( $user_array) ): ?>
-              <td>メールアドレス</td>
-              <td><?php echo ($_SESSION['email']); ?></td>
+              <?php if( !empty( $team_array) ): ?>
+                <td class>主将名前</td>
+                <td class><?php echo $team_array['c_firstname']; ?><?php echo $team_array['c_lastname']; ?></td>
+              <?php endif; ?>
+            </tr>            <tr>
+              <?php if( !empty( $team_array) ): ?>
+                <td class>副将名前</td>
+                <td class><?php echo $team_array['s_firstname']; ?><?php echo $team_array['s_lastname']; ?></td>
+              <?php endif; ?>
+            </tr>
+            <tr>
+            <?php if( !empty( $team_array) ): ?>
+              <td>チーム人数</td>
+              <td><?php echo $team_array['member']; ?></td>
             <?php endif; ?>
             </tr>
             <tr>
-            <?php if( !empty( $user_array) ): ?>
-              <td>郵便番号</td>
-              <td><?php echo $user_array['zip']; ?></td>
-            <?php endif; ?>
-            </tr>
-            <tr>
-              <?php if( !empty( $user_array) ): ?>
-                <td>住所</td>
-                <td><?php echo $user_array['address1']; ?></td>
+              <?php if( !empty( $team_array) ): ?>
+                <td>チーム平均年齢</td>
+                <td><?php echo $team_array['age']; ?></td>
                 <?php endif; ?>
               </tr>
               <tr>
-                <?php if( !empty( $user_array) ): ?>
-                  <td>住所2</td>
-                  <td><?php echo $user_array['address2']; ?></td>
+                <?php if( !empty( $team_array) ): ?>
+                  <td>活動場所</td>
+                  <td><?php echo $team_array['pref']; ?><?php echo $team_array['city']; ?></td>
                   <?php endif; ?>
                 </tr>
                 <tr>
-                <?php if( !empty( $user_array) ): ?>
+                <?php if( !empty( $team_array) ): ?>
                   <td>パスワード</td>
-                  <td><?php echo $user_array['password']; ?></td>
+                  <td><?php echo $team_array['password']; ?></td>
                 <?php endif; ?>
                 </tr>
               </tbody>

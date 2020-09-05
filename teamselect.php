@@ -40,8 +40,8 @@ session_start();
   <!-- Page Content -->
   <div class="container">
       <ul>
-          <li><a href="http://localhost/baseball/team.php">チームを作る</a>
-          <li><a href="http://localhost/baseball/teamcatalog.php">チームを探す </a>
+        <li><a href="./team.php">チームを作る </a></li>
+        <li><a href="./teamcatalog.php">チームを探す </a></li>
       </ul>
   </div>
 

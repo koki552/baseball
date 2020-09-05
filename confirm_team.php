@@ -13,7 +13,6 @@ $s_firstname = $_POST['s_firstname'];
 $s_lastname = $_POST['s_lastname'];
 $member = $_POST['member'];
 $age = $_POST['age'];
-$email = $_POST['email'];
 $pref = $_POST['pref'];
 $city = $_POST['city'];
 $password = $_POST['password'];
@@ -29,7 +28,6 @@ $_SESSION['s_firstname'] = $s_firstname;
 $_SESSION['s_lastname'] = $s_lastname;
 $_SESSION['member'] = $member;
 $_SESSION['age'] = $age;
-$_SESSION['email'] = $email;
 $_SESSION['pref'] = $pref;
 $_SESSION['city'] = $city;
 $_SESSION['password'] = $password;
@@ -67,6 +65,16 @@ $_SESSION['password'] = $password;
   }
 </style>
 
+  <!-- header -->
+  <?php include( $_SERVER['DOCUMENT_ROOT'] . '/baseball/header.php'); ?>
+
+  <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="http://localhost/baseball/home.php">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">My Team Page</li>
+  </ol>
+  </nav>
+
 <!-- Page Content -->
 <div class="container">
 
@@ -102,10 +110,6 @@ $_SESSION['password'] = $password;
   <tr>
     <td>チーム平均年齢</td>
     <td><?php echo $age; ?></td>
-  </tr>
-  <tr>
-    <td>メールアドレス</td>
-    <td><?php echo $email; ?></td>
   </tr>
   <tr>
     <td>活動場所</td>
