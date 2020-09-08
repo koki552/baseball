@@ -1,5 +1,4 @@
 <?php
-
 // セッションの開始
 session_start();
 
@@ -17,7 +16,7 @@ if( $mysqli->connect_errno) {
   $error_message[] = 'データの読み込みに失敗しました。エラー番号 '.$mysqli->connect_errno.' : '.$mysqli->connect_error;
 } else {
 
-  $sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password FROM user WHERE email ='".$_SESSION['email']."'";
+  $sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team, status FROM user WHERE email ='".$_SESSION['email']."'";
   $res = $mysqli->query($sql);
 
   if($res) {

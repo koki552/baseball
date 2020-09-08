@@ -1,4 +1,5 @@
 <?php
+
 // データベースの接続情報
 define( 'DB_HOST', 'localhost');
 define( 'DB_USER', 'root');
@@ -61,9 +62,9 @@ if( $mysqli->connect_errno) {
   .content{
     width: 70%;
   }
-  a {
+  /* a {
     padding-left: 20px;
-  }
+  } */
 
   .teampage{
     text-align: center;

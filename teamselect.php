@@ -23,6 +23,30 @@ session_start();
 </head>
 
 <style>
+    a {
+    padding-left: 20px;
+  }
+  .userpage{
+    text-align: center;
+  }
+  .col-2 {
+    float: left;
+  }
+  .col-10 {
+    float: right;
+  }
+  .col-2 ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+  }
+  .col-2 h5 {
+    text-align: center;
+  }
+  .sidebar_li {
+    padding: 5px 0;
+    color: #646464;
+  }
 </style>
 
 <body>
@@ -39,10 +63,31 @@ session_start();
 
   <!-- Page Content -->
   <div class="container">
-      <ul>
-        <li><a href="./team.php">チームを作る </a></li>
-        <li><a href="./teamcatalog.php">チームを探す </a></li>
-      </ul>
+    <br><h4><?php echo ($_SESSION['email']) . "様の登録情報"; ?>
+    <br><h5 class="userpage">会員登録情報</h5><br>
+    
+    <div class = "col-10">
+      <h6>現在チームに所属していません</h6>
+        <ul>
+          <li><a href="./team.php">チームを作る </a></li>
+          <li><a href="./teamcatalog.php">チームを探す </a></li>
+        </ul>
+    </div>
+
+    <!-- sidebar -->
+    <div class="col-2">
+        <h5>会員登録情報</h5>
+        <ul>
+          <li><a class="sidebar_li" href="http://localhost/baseball/mypage.php">会員登録情報</a><li>
+          <li><a class="sidebar_li" href="http://localhost/baseball/userscore.php">個人成績</a></li>
+        </ul>
+        <hr>
+        <h5>チーム情報</h5>
+        <ul>
+          <li><a class="sidebar_li" href="http://localhost/baseball/myteam.php">マイチーム</a><li>
+          <li><a class="sidebar_li" href="#">チーム成績</a></li>
+        </ul>
+      </div>
   </div>
 
   <!-- Optional JavaScript -->

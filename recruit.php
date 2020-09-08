@@ -1,4 +1,5 @@
 <?php
+
 // セッションの開始
 session_start();
 
@@ -8,26 +9,19 @@ define( 'DB_USER', 'root');
 define( 'DB_PASS', '');
 define( 'DB_NAME', 'baseball');
 
+$teamid = $_GET['team_id'];
+$_SESSION['teamid'] = $teamid;
+
 // データベースに接続
 $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-// 接続エラーの確認
-if( $mysqli->connect_errno) {
-  $error_message[] = 'データの読み込みに失敗しました。エラー番号 '.$mysqli->connect_errno.' : '.$mysqli->connect_error;
-} else {
-
-  $sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password FROM user WHERE email ='".$_SESSION['email']."'";
-  $res = $mysqli->query($sql);
-
-  if($res) {
-    $user_array = $res->fetch_assoc();
-  }else {
-
-      // データが読み込めなかったら一覧に戻る
-      header("Location: ./home.php");
-    }
-    $mysqli->close();
+$sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team, status FROM user WHERE email ='".$_SESSION['email']."'";
+$res = $mysqli->query($sql);
+if($res) {
+  $user_array = $res->fetch_assoc();
 }
+
+$mysqli->close();
 
 ?>
 
@@ -155,7 +149,7 @@ if( $mysqli->connect_errno) {
         <div class="form-group">
           <label for="exampleFormControlTextarea1">お問い合わせ内容</label>
           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="comment"></textarea>
-         </div>
+        </div>
 
         <input type="submit" class="btn btn-outline-primary" name="btn_submit" value="送信">
       </form>

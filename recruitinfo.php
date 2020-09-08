@@ -9,33 +9,25 @@ define( 'DB_USER', 'root');
 define( 'DB_PASS', '');
 define( 'DB_NAME', 'baseball');
 
-if( !empty($_GET['recruit_id']) && empty($_POST['recruit_id'])) {
+// データベースに接続
+$mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-    $recruit_id = (int)htmlspecialchars($_GET['recruit_id'], ENT_QUOTES);
-    
-    // データベースに接続
-    $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-// 接続エラーの確認
-if( $mysqli->connect_errno) {
-    $error_message[] = 'データベースの接続に失敗しました。エラー番号 '.$mysqli->connect_errno.' : '.$mysqli->connect_error;
-} else {
-
-    // データの読み込み
-    $sql = "SELECT id, firstname, lastname, age, email, experience, comment FROM recruit WHERE id = $recruit_id";
-    $res = $mysqli->query($sql);
-
-    if( $res ) {
-        $applicant_array = $res->fetch_assoc();
-    } else {
-
-        // データが読み込めなかったら一覧に戻る
-        header("Location: ./applicant.php");
-    }
-
-    $mysqli->close();
-    }  
+// ログイン者の情報呼び出し
+$sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password FROM user WHERE email ='".$_SESSION['email']."'";
+$res = $mysqli->query($sql);
+if($res) {
+  $user_array = $res->fetch_assoc();
 }
+
+// チーム情報呼び出し
+$sql ="SELECT `id`, `teamname`, `est`, `r_userid`, `r_firstname`, `r_lastname`, `c_firstname`, `c_lastname`, `s_firstname`, `s_lastname`, `member`, `age`, `pref`, `city`, `password` FROM `team` WHERE r_userid ='".$user_array['id']."'";
+$res = $mysqli->query($sql);
+if($res) {
+  $team_array = $res->fetch_assoc();
+}
+
+// データベースの検索を閉じる
+$mysqli->close();
 
 ?>
 

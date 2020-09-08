@@ -13,7 +13,7 @@ define( 'DB_NAME', 'baseball');
 $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 // user情報呼び出し
-$sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team FROM user WHERE email ='".$_SESSION['email']."'";
+$sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team, status FROM user WHERE email ='".$_SESSION['email']."' and status =1";
 $res = $mysqli->query($sql);
 if($res) {
     $user_array = $res->fetch_assoc();
@@ -143,10 +143,8 @@ $mysqli->close();
                   <?php endif; ?>
                 </tr>
                 <tr>
-                <?php if( !empty( $team_array) ): ?>
                   <td>パスワード</td>
-                  <td><?php echo $team_array['password']; ?></td>
-                <?php endif; ?>
+                  <td>セキュリティ保護のため、表示していません。</td>
                 </tr>
               </tbody>
         </table>

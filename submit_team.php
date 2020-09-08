@@ -27,7 +27,7 @@ define( 'DB_NAME', 'baseball');
 $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 // ログイン者の情報呼び出し
-$sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password FROM user WHERE email ='".$_SESSION['email']."'";
+$sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team, status FROM user WHERE email ='".$_SESSION['email']."'";
 $res = $mysqli->query($sql);
 if($res) {
   $user_array = $res->fetch_assoc();
@@ -50,9 +50,12 @@ if($res) {
 
 
 // userテーブルにteam_id登録
-// データを登録するSQL作成
-$sql = "UPDATE `user` SET `team` = '".$team_array['id']."'";
-// データを登録
+$sql = "UPDATE `user` SET `team` = '".$team_array['id']."' WHERE email = '".$_SESSION['email']."' ";
+$res = $mysqli->query($sql);
+
+
+// statusを1に変更
+$sql = "UPDATE `user` SET `status` = 1 WHERE email = '".$_SESSION['email']."' ";
 $res = $mysqli->query($sql);
 if($res) {
   header("Location: ./myteampage.php");

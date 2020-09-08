@@ -133,10 +133,8 @@ if( $mysqli->connect_errno) {
                   <?php endif; ?>
                 </tr>
                 <tr>
-                <?php if( !empty( $user_array) ): ?>
                   <td>パスワード</td>
-                  <td><?php echo $user_array['password']; ?></td>
-                <?php endif; ?>
+                  <td>セキュリティ保護のため、表示していません。</td>
                 </tr>
               </tbody>
         </table>

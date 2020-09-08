@@ -1,5 +1,4 @@
 <?php
-
 // セッションの開始
 session_start();
 
@@ -19,6 +18,9 @@ $_SESSION['email'] = $email;
 $_SESSION['experience'] = $experience;
 // $_SESSION['position[]'] = $position;
 $_SESSION['comment'] = $comment;
+
+$_SESSION['teamid'];
+
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +86,7 @@ $_SESSION['comment'] = $comment;
 </tbody>
 </table>
 <button type="button" class="btn btn-outline-secondary" onclick="history.back()">戻る</button>
-<input type="submit" class="btn btn-outline-primary" name="btn_submit" onClick="location.href='mypage.php?todo_id=<?php echo $value['id'];?>'" value="登録">
+<input type="submit" class="btn btn-outline-primary" name="btn_submit" value="登録">
 </form>
 </div>
 

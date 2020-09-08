@@ -10,6 +10,7 @@ $email = htmlspecialchars( $_SESSION['email'], ENT_QUOTES);
 $experience = htmlspecialchars( $_SESSION['experience'], ENT_QUOTES);
 // $position = htmlspecialchars( $_SESSION['position'], ENT_QUOTES);
 $comment = htmlspecialchars( $_SESSION['comment'], ENT_QUOTES);
+$teamid = $_SESSION['teamid'];
 
 // データベースの接続情報
 define( 'DB_HOST', 'localhost');
@@ -20,11 +21,23 @@ define( 'DB_NAME', 'baseball');
 // データベースに接続
 $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-// データを登録するSQL作成
+// データベースrecruitに登録
 $sql = "INSERT INTO `recruit`(`firstname`, `lastname`, `age`, `email`, `experience`, `comment`) VALUES ('".$firstname."', '".$lastname."', '".$age."', '".$email."', '".$experience."', '".$comment."')";
-
-// データを登録
 $res = $mysqli->query($sql);
+
+
+// recruit登録者をuserテーブルから情報呼び出し
+$sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team, status FROM user WHERE email ='".$_SESSION['email']."'";
+$res = $mysqli->query($sql);
+if($res) {
+  $user_array = $res->fetch_assoc();
+  }
+
+
+// team仮登録
+$sql ="UPDATE user SET team = $teamid WHERE email = '".$_SESSION['email']."'";
+$res = $mysqli->query($sql);
+
 
 // データベースの検索を閉じる
 $mysqli->close();
