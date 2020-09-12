@@ -3,31 +3,29 @@
 // セッションの開始
 session_start();
 
+$_SESSION['teamid'];
+
 // データベースの接続情報
 define( 'DB_HOST', 'localhost');
 define( 'DB_USER', 'root');
 define( 'DB_PASS', '');
 define( 'DB_NAME', 'baseball');
 
-$teamid = $_GET['team_id'];
-$_SESSION['teamid'] = $teamid;
-
 // データベースに接続
 $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-// ログイン者の情報呼び出し
-$sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password FROM user WHERE email ='".$_SESSION['email']."'";
+$sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team, status FROM user WHERE team ='".$_SESSION['teamid']."'";
 $res = $mysqli->query($sql);
 if($res) {
   $user_array = $res->fetch_assoc();
-}
+  }
 
-// チーム情報呼び出し
-$sql ="SELECT `id`, `teamname`, `est`, `r_userid`, `r_firstname`, `r_lastname`, `c_firstname`, `c_lastname`, `s_firstname`, `s_lastname`, `member`, `age`, `pref`, `city`, `password` FROM `team` WHERE r_userid ='".$user_array['id']."'";
+
+$sql = "SELECT id, firstname, lastname, age, email, experience, comment, team_id FROM recruit WHERE team_id = $user_array[team] and status =0";
 $res = $mysqli->query($sql);
 if($res) {
-  $team_array = $res->fetch_assoc();
-}
+  $recruit_array = $res->fetch_assoc();
+  }
 
 // データベースの検索を閉じる
 $mysqli->close();
@@ -98,61 +96,12 @@ $mysqli->close();
     <table class="table">
       <tbody>
         <tr>
-          <?php if( !empty( $team_array) ): ?>
-            <td class="title">チーム名</td>
-            <td class="content"><?php echo $team_array['teamname']; ?></td>
-          <?php endif; ?>
-        </tr>
-        <tr>
-        <?php if( !empty( $team_array) ): ?>
-          <td>設立年</td>
-          <td><?php echo $team_array['age']; ?></td>
+        <?php if( !empty( $recruit_array) ): ?>
+            <?php echo "<a href="."recruitinfo.php?recruit_id=$recruit_array[id]".">$recruit_array[firstname]</a>"; ?>
         <?php endif; ?>
         </tr>
-        <tr>
-          <?php if( !empty( $team_array) ): ?>
-            <td class>代表者名前</td>
-            <td class><?php echo $team_array['r_firstname']; ?><?php echo $team_array['r_lastname']; ?></td>
-          <?php endif; ?>
-        </tr>
-        <tr>
-          <?php if( !empty( $team_array) ): ?>
-            <td class>主将名前</td>
-            <td class><?php echo $team_array['c_firstname']; ?><?php echo $team_array['c_lastname']; ?></td>
-          <?php endif; ?>
-        </tr>            <tr>
-          <?php if( !empty( $team_array) ): ?>
-            <td class>副将名前</td>
-            <td class><?php echo $team_array['s_firstname']; ?><?php echo $team_array['s_lastname']; ?></td>
-          <?php endif; ?>
-        </tr>
-        <tr>
-        <?php if( !empty( $team_array) ): ?>
-          <td>チーム人数</td>
-          <td><?php echo $team_array['member']; ?></td>
-        <?php endif; ?>
-        </tr>
-        <tr>
-          <?php if( !empty( $team_array) ): ?>
-            <td>チーム平均年齢</td>
-            <td><?php echo $team_array['age']; ?></td>
-            <?php endif; ?>
-          </tr>
-          <tr>
-            <?php if( !empty( $team_array) ): ?>
-              <td>活動場所</td>
-              <td><?php echo $team_array['pref']; ?><?php echo $team_array['city']; ?></td>
-              <?php endif; ?>
-            </tr>
-            <tr>
-                <td>入団希望者</td>
-                <td><a href="./recruit_catalog.php">確認する</a></td>
-            </tr>
-          </tbody>
+     </tbody>
     </table>
-    
-    <button type="button" class="btn btn-outline-secondary">編集</button>
-    
     </div>
 
 

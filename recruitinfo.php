@@ -9,22 +9,33 @@ define( 'DB_USER', 'root');
 define( 'DB_PASS', '');
 define( 'DB_NAME', 'baseball');
 
+$recruitid = $_GET['recruit_id'];
+
 // データベースに接続
 $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 // ログイン者の情報呼び出し
-$sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password FROM user WHERE email ='".$_SESSION['email']."'";
+$sql = "SELECT id, firstname, lastname, age, email, experience, comment, user_id, team_id, status FROM recruit WHERE id = $recruitid";
+$res = $mysqli->query($sql);
+if($res) {
+  $recruit_array = $res->fetch_assoc();
+}
+
+
+$sql= "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team, status FROM user WHERE id = $recruit_array[user_id]";
 $res = $mysqli->query($sql);
 if($res) {
   $user_array = $res->fetch_assoc();
 }
 
-// チーム情報呼び出し
-$sql ="SELECT `id`, `teamname`, `est`, `r_userid`, `r_firstname`, `r_lastname`, `c_firstname`, `c_lastname`, `s_firstname`, `s_lastname`, `member`, `age`, `pref`, `city`, `password` FROM `team` WHERE r_userid ='".$user_array['id']."'";
-$res = $mysqli->query($sql);
-if($res) {
-  $team_array = $res->fetch_assoc();
-}
+
+if ( isset($_POST['btn_submit']) ) {
+  $sql = "UPDATE user SET status = 1 WHERE $user_array[id] = $recruit_array[user_id]";
+  $res = $mysqli->query($sql);
+  $sql = "UPDATE recruit SET status = 1 WHERE id = $recruitid";
+  $res = $mysqli->query($sql);
+  header("Location: ./recruit_catalog.php");
+}      
 
 // データベースの検索を閉じる
 $mysqli->close();
@@ -65,43 +76,45 @@ $mysqli->close();
   <div class="container">
 
   <br><h4 class="userpage">個人情報</h4><br>
-
+  
+  <form method="post">
     <table class="table">
     <tbody>
       <tr>
-        <?php if( !empty( $applicant_array) ): ?>
+        <?php if( !empty( $recruit_array) ): ?>
         <td>名前</td>
-        <td><?php echo $applicant_array['firstname']; ?><?php echo $applicant_array['lastname']; ?></td>
+        <td><?php echo $recruit_array['firstname']; ?><?php echo $recruit_array['lastname']; ?></td>
         <?php endif; ?>
       </tr>
       <tr>
-        <?php if( !empty( $applicant_array) ): ?>
+        <?php if( !empty( $recruit_array) ): ?>
         <td>年齢</td>
-        <td><?php echo $applicant_array['age']; ?></td>
+        <td><?php echo $recruit_array['age']; ?></td>
         <?php endif; ?>
       </tr>
       <tr>
-        <?php if( !empty( $applicant_array) ): ?>
+        <?php if( !empty( $recruit_array) ): ?>
         <td>メールアドレス</td>
-        <td><?php echo $applicant_array['email']; ?></td>
+        <td><?php echo $recruit_array['email']; ?></td>
         <?php endif; ?>
       </tr>
       <tr>
-        <?php if( !empty( $applicant_array) ): ?>
+        <?php if( !empty( $recruit_array) ): ?>
         <td>野球歴</td>
-        <td><?php echo $applicant_array['experience']; ?></td>
+        <td><?php echo $recruit_array['experience']; ?></td>
         <?php endif; ?>
       </tr>
       <tr>
-        <?php if( !empty( $applicant_array) ): ?>
+        <?php if( !empty( $recruit_array) ): ?>
         <td>お問い合わせ内容</td>
-        <td><?php echo $applicant_array['comment']; ?></td>
+        <td><?php echo $recruit_array['comment']; ?></td>
         <?php endif; ?>
       </tr>
     </tbody>
     </table>
     <button type="button" class="btn btn-outline-secondary" onclick="history.back()">戻る</button>
-    <input type="submit" class="btn btn-outline-primary" name="btn_submit" onClick="location.href='mypage.php?todo_id=<?php echo $value['id'];?>'" value="確認">
+    <input type="submit" class="btn btn-outline-primary" name="btn_submit" value="確認">
+  </form>
   </div>
 
     <!-- Optional JavaScript -->

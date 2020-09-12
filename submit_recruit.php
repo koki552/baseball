@@ -11,6 +11,7 @@ $experience = htmlspecialchars( $_SESSION['experience'], ENT_QUOTES);
 // $position = htmlspecialchars( $_SESSION['position'], ENT_QUOTES);
 $comment = htmlspecialchars( $_SESSION['comment'], ENT_QUOTES);
 $teamid = $_SESSION['teamid'];
+$status = 0;
 
 // データベースの接続情報
 define( 'DB_HOST', 'localhost');
@@ -22,7 +23,7 @@ define( 'DB_NAME', 'baseball');
 $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 // データベースrecruitに登録
-$sql = "INSERT INTO `recruit`(`firstname`, `lastname`, `age`, `email`, `experience`, `comment`) VALUES ('".$firstname."', '".$lastname."', '".$age."', '".$email."', '".$experience."', '".$comment."')";
+$sql = "INSERT INTO recruit(firstname, lastname, age, email, experience, comment, team_id, status) VALUES ('".$firstname."', '".$lastname."', '".$age."', '".$email."', '".$experience."', '".$comment."', '".$teamid."', '".$status."')";
 $res = $mysqli->query($sql);
 
 

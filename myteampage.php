@@ -146,8 +146,10 @@ $mysqli->close();
                   <td>パスワード</td>
                   <td>セキュリティ保護のため、表示していません。</td>
                 </tr>
-              </tbody>
-        </table>
+                </tbody>
+              </table>
+              <?php echo "<a href="."teammgt.php?team_id=$user_array[team]".">チーム管理ページ</a>"; ?>
+              
       </div>
 
     <!-- sidebar -->
