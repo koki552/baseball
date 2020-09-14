@@ -30,25 +30,11 @@ $sql = "INSERT INTO `user`(`firstname`, `lastname`, `username`, `email`, `zip`, 
 // データを登録
 $res = $mysqli->query($sql);
 
+if ($res) {
+  header("Location: ./home.php");
+}
+
 // データベースの検索を閉じる
 $mysqli->close();
 
 ?>
-
-<!DOCTYPE HTML>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<title>ユーザー登録フォーム・登録ページ</title>
-<style>
-p {
-  margin-left: 50px;
-}
-</style>
-</head>
-
-<body>
-<p>ご登録ありがとうございました。</p>
-<p><a href="signup.php">ログインする</a></p>
-</body>
-</html>

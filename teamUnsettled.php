@@ -9,27 +9,21 @@ define( 'DB_USER', 'root');
 define( 'DB_PASS', '');
 define( 'DB_NAME', 'baseball');
 
-$teamid = $_GET['team_id'];
-$_SESSION['teamid'] = $teamid;
-
 // データベースに接続
 $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-// ログイン者の情報呼び出し
 $sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team, status FROM user WHERE email ='".$_SESSION['email']."'";
 $res = $mysqli->query($sql);
 if($res) {
-  $user_array = $res->fetch_assoc();
+    $user_array = $res->fetch_assoc();
 }
 
-// チーム情報呼び出し
-$sql ="SELECT id, teamname, est, r_userid, r_firstname, r_lastname, c_firstname, c_lastname, s_firstname, s_lastname, member, age, pref, city, password FROM team WHERE id ='".$user_array['team']."'";
+$sql = "SELECT id, teamname, est, r_userid, r_firstname, r_lastname, c_firstname, c_lastname, s_firstname, s_lastname, member, age, pref, city, password FROM team WHERE id = $user_array[team]";
 $res = $mysqli->query($sql);
 if($res) {
-  $team_array = $res->fetch_assoc();
+    $team_array = $res->fetch_assoc();
 }
 
-// データベースの検索を閉じる
 $mysqli->close();
 
 ?>
@@ -52,9 +46,9 @@ $mysqli->close();
 </head>
 
 <style>
-    /* a {
+    a {
     padding-left: 20px;
-  } */
+  }
   .userpage{
     text-align: center;
   }
@@ -78,7 +72,6 @@ $mysqli->close();
   }
 </style>
 
-
 <body>
 
   <!-- header -->
@@ -93,71 +86,15 @@ $mysqli->close();
 
   <!-- Page Content -->
   <div class="container">
+    <br><h4><?php echo ($_SESSION['email']) . "様の登録情報"; ?>
+    <br><h5 class="userpage">会員登録情報</h5><br>
+    
     <div class = "col-10">
-    <br><h5 class="userpage">チーム情報 管理</h5><br>
-    <table class="table">
-      <tbody>
-        <tr>
-          <?php if( !empty( $team_array) ): ?>
-            <td class="title">チーム名</td>
-            <td class="content"><?php echo $team_array['teamname']; ?></td>
-          <?php endif; ?>
-        </tr>
-        <tr>
-        <?php if( !empty( $team_array) ): ?>
-          <td>設立年</td>
-          <td><?php echo $team_array['age']; ?></td>
-        <?php endif; ?>
-        </tr>
-        <tr>
-          <?php if( !empty( $team_array) ): ?>
-            <td class>代表者名前</td>
-            <td class><?php echo $team_array['r_firstname']; ?><?php echo $team_array['r_lastname']; ?></td>
-          <?php endif; ?>
-        </tr>
-        <tr>
-          <?php if( !empty( $team_array) ): ?>
-            <td class>主将名前</td>
-            <td class><?php echo $team_array['c_firstname']; ?><?php echo $team_array['c_lastname']; ?></td>
-          <?php endif; ?>
-        </tr>            <tr>
-          <?php if( !empty( $team_array) ): ?>
-            <td class>副将名前</td>
-            <td class><?php echo $team_array['s_firstname']; ?><?php echo $team_array['s_lastname']; ?></td>
-          <?php endif; ?>
-        </tr>
-        <tr>
-        <?php if( !empty( $team_array) ): ?>
-          <td>チーム人数</td>
-          <td><?php echo $team_array['member']; ?></td>
-        <?php endif; ?>
-        </tr>
-        <tr>
-          <?php if( !empty( $team_array) ): ?>
-            <td>チーム平均年齢</td>
-            <td><?php echo $team_array['age']; ?></td>
-            <?php endif; ?>
-          </tr>
-          <tr>
-            <?php if( !empty( $team_array) ): ?>
-              <td>活動場所</td>
-              <td><?php echo $team_array['pref']; ?><?php echo $team_array['city']; ?></td>
-              <?php endif; ?>
-            </tr>
-            <tr>
-                <td>入団希望者</td>
-                <td><a href="./recruit_catalog.php">確認する</a></td>
-            </tr>
-          </tbody>
-    </table>
-    
-    <button type="button" class="btn btn-outline-secondary">編集</button>
-    
+      <h6><?php echo ($team_array['teamname']). "に入部申し込み中"; ?></h6>
     </div>
 
-
-     <!-- sidebar -->
-     <div class="col-2">
+    <!-- sidebar -->
+    <div class="col-2">
         <h5>会員登録情報</h5>
         <ul>
           <li><a class="sidebar_li" href="http://localhost/baseball/mypage.php">会員登録情報</a><li>
@@ -170,10 +107,9 @@ $mysqli->close();
           <li><a class="sidebar_li" href="#">チーム成績</a></li>
         </ul>
       </div>
-    </div>
- </div>
+  </div>
 
-    <!-- Optional JavaScript -->
+  <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

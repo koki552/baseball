@@ -12,56 +12,37 @@ define( 'DB_NAME', 'baseball');
 // データベースに接続
 $mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-// 接続エラーの確認
-if( $mysqli->connect_errno) {
-    $error_message[] = 'データの読み込みに失敗しました。エラー番号 '.$mysqli->connect_errno.' : '.$mysqli->connect_error;
-  } else {
-  
-    $sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team, status FROM user WHERE email ='".$_SESSION['email']."'";
-    $res = $mysqli->query($sql);
-  
-    if($res) {
-        $team_array = $res->fetch_assoc();
-        
-    }else {
-        // データが読み込めなかったらページ移動
-        header("Location: ./mypage.php");
-      }
-      $mysqli->close();
+$sql = "SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team, status FROM user WHERE email ='".$_SESSION['email']."'";
+$res = $mysqli->query($sql);
+
+if($res) {
+    $user_array = $res->fetch_assoc();    
+}else {
+    // データが読み込めなかったらページ移動
+    header("Location: ./mypage.php");
   }
 
-  if($team_array['status'] == 0 ) {
-     header("Location: ./teamselect.php");
+// team情報呼び出し
+$sql ="SELECT id, teamname, est, r_userid, r_firstname, r_lastname, c_firstname, c_lastname, s_firstname, s_lastname, member, age, pref, city, password FROM team WHERE id ='".$user_array['team']."'";
+$res = $mysqli->query($sql);
+if($res) {
+  $team_array = $res->fetch_assoc();
+}
+
+  
+  if($user_array['status'] == 0 and $user_array['team'] == 0 ) {
+    header("Location: ./teamselect.php");
   }
-    else {
-        header("Location: ./myteampage.php");
-    }
+  elseif($user_array['status'] == 0 and $user_array['team'] !== 0 ) {
+    header("Location: ./teamUnsettled.php");
+  } 
+  elseif($user_array['status'] !== 0 and $user_array['team'] !== 0 and $user_array['id'] == $team_array['r_userid']) {
+    header("Location: ./myTeampageMgt.php");
+  }
+  else {
+    header("Location: ./myteampage.php");
+  }
+  
+  $mysqli->close();
 
 ?>
-
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>BASEBALL MY PAGE</title>
-
-  <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-</head>
-
-<style>
-</style>
-
-<body>
-
-  <!-- header -->
-  <?php include( $_SERVER['DOCUMENT_ROOT'] . '/baseball/header.php'); ?>
-
-</body>

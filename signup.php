@@ -22,12 +22,12 @@ if (isset($_SESSION['email'])) {
     <link href="../example.css" rel="stylesheet">
   </head>
 
-<body  class="text-center" >
-  <a id="skippy" class="sr-only sr-only-focusable" href="#content">
+<body class="text-center" >
+  <!-- <a id="skippy" class="sr-only sr-only-focusable" href="#content">
     <div class="container">
       <span class="skiplink-text">Skip to main content</span>
     </div>
-  </a>
+  </a> -->
 
 <form action="login.php" method="post" class="form-signin">
 
