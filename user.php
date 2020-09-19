@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap" rel="stylesheet">
     <link href="form-validation.css" rel="stylesheet">
-    <link href="../example.css" rel="stylesheet">
   </head>
   <body class="bg-light" >
     <a id="skippy" class="sr-only sr-only-focusable" href="#content">

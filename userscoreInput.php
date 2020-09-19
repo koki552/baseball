@@ -63,7 +63,7 @@ session_start();
 <div class="container">
 <!-- Content here -->
   <br><h4><?php echo ($_SESSION['email']) . "様の登録情報"; ?>  
-  <br><h5 class="userpage">個人成績</h5><br>
+  <br><h5 class="userpage">個人成績入力</h5><br>
 
   <div class = "col-10">
     <h6>年度別成績</h6>

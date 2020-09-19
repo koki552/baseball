@@ -60,6 +60,7 @@ $mysqli->close();
   }
   .col-2 {
     float: left;
+    margin-top: 80px;
   }
   .col-10 {
     float: right;
@@ -143,6 +144,10 @@ $mysqli->close();
               <td>活動場所</td>
               <td><?php echo $team_array['pref']; ?><?php echo $team_array['city']; ?></td>
               <?php endif; ?>
+            </tr>
+            <tr>
+              <td>チーム成績</td>
+              <td><a href="./teamScore.php">入力画面へ</a></td>
             </tr>
             <tr>
                 <td>入団希望者</td>

@@ -15,6 +15,8 @@
   color: rgba(255,255,255,.5);
   background-color: #343a40!important;
   border-color: #343a40!important;
+  padding-right: 0;
+  padding-left: 0;
 }
 #header {
   

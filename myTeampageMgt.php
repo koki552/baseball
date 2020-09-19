@@ -73,6 +73,9 @@ $mysqli->close();
     padding: 5px 0;
     color: #646464;
   }
+  .page {
+    padding-left: 0px;
+  }
 </style>
 
 <body>
@@ -146,9 +149,12 @@ $mysqli->close();
                   <td>パスワード</td>
                   <td>セキュリティ保護のため、表示していません。</td>
                 </tr>
+                <tr>
+                  <td><?php echo "<a class='page' href="."teammgt.php?team_id=$user_array[team]".">チーム管理ページ</a>"; ?></td>
+                  <td></td>
+                </tr>
                 </tbody>
               </table>
-              <?php echo "<a href="."teammgt.php?team_id=$user_array[team]".">チーム管理ページ</a>"; ?>
               
       </div>
 
