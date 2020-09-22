@@ -94,7 +94,12 @@ session_start();
       </tr>
     
     </table>
-    <h6><a href="./userscoreInput.php">個人成績入力ページ</a></h6>
+    <h6>個人成績入力ページへ</a></h6>
+    <h7>入力する試合日選択</h7>
+    <form action="userscoreInput.php" method="post" class="needs-validation" novalidate>
+      <input type="date" name="date"><br>
+      <input type="submit" class="btn btn-outline-primary" name="btn_submit" onClick="location.href='mypage.php?todo_id=<?php echo $value['id'];?>'" value="送信">
+    </form>
   </div>
 
 

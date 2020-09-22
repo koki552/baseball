@@ -33,36 +33,28 @@ if($res) {
 
 
 // チーム成績表示
-// 年、試合数取得
-$sql ="SELECT DATE_FORMAT(date, '%Y') year, COUNT(*) ct FROM teamScore WHERE team_id = $user_array[team] GROUP BY DATE_FORMAT(date, '%Y')";
-$res = $mysqli->query($sql);
-if($res) {
-  $game_array = $res->fetch_all(MYSQLI_ASSOC);
-}
-
 // 勝ち数取得
-$sql ="SELECT DATE_FORMAT(date, '%Y') year, COUNT(*) ct, (CASE WHEN (win =1) THEN '勝ち' WHEN (win=2) THEN '負け' ELSE '引分' END) as type FROM `teamScore` WHERE win = 1 and team_id = $user_array[team] GROUP BY CASE WHEN (win =1) THEN '勝ち' WHEN (win=2) THEN '負け' ELSE '引分' END, DATE_FORMAT(date, '%Y')";
+$sql ="SELECT DATE_FORMAT(date, '%Y') year, COUNT(*) ct FROM `teamScore` WHERE win = 1 and team_id = $user_array[team] GROUP BY CASE WHEN (win =1) THEN '勝ち' WHEN (win=2) THEN '負け' ELSE '引分' END, DATE_FORMAT(date, '%Y')";
 $res = $mysqli->query($sql);
 if($res) {
   $win_array = $res->fetch_all(MYSQLI_ASSOC);
 }
 
 // 負け数取得
-$sql ="SELECT DATE_FORMAT(date, '%Y') year, COUNT(*) ct, (CASE WHEN (win =1) THEN '勝ち' WHEN (win=2) THEN '負け' ELSE '引分' END) as type FROM `teamScore` WHERE win = 2 and team_id = $user_array[team] GROUP BY CASE WHEN (win =1) THEN '勝ち' WHEN (win=2) THEN '負け' ELSE '引分' END, DATE_FORMAT(date, '%Y')";
+$sql ="SELECT DATE_FORMAT(date, '%Y') year, COUNT(*) ct FROM `teamScore` WHERE win = 2 and team_id = $user_array[team] GROUP BY CASE WHEN (win =1) THEN '勝ち' WHEN (win=2) THEN '負け' ELSE '引分' END, DATE_FORMAT(date, '%Y')";
 $res = $mysqli->query($sql);
 if($res) {
   $lose_array = $res->fetch_all(MYSQLI_ASSOC);
 }
 
 // 引分数取得
-$sql ="SELECT DATE_FORMAT(date, '%Y') year, COUNT(*) ct, (CASE WHEN (win =1) THEN '勝ち' WHEN (win=2) THEN '負け' ELSE '引分' END) as type FROM `teamScore` WHERE win = 3 and team_id = $user_array[team] GROUP BY CASE WHEN (win =1) THEN '勝ち' WHEN (win=2) THEN '負け' ELSE '引分' END, DATE_FORMAT(date, '%Y')";
+$sql ="SELECT DATE_FORMAT(date, '%Y') year, COUNT(*) ct FROM `teamScore` WHERE win = 3 and team_id = $user_array[team] GROUP BY CASE WHEN (win =1) THEN '勝ち' WHEN (win=2) THEN '負け' ELSE '引分' END, DATE_FORMAT(date, '%Y')";
 $res = $mysqli->query($sql);
 if($res) {
   $draw_array = $res->fetch_all(MYSQLI_ASSOC);
 }
 
-
-  $mysqli->close();
+$mysqli->close();
 
 ?>
 
@@ -144,24 +136,33 @@ if($res) {
             <th>引分</th>
             <th>勝率</th>
           </tr>
-        <?php if( !empty($game_array) && !empty($win_array) ): ?>
-          <?php foreach($game_array as $value): ?>
+        <?php if(!empty($win_array) && !empty($lose_array) && !empty($draw_array)): ?>
           <?php foreach($win_array as $value1): ?>
           <?php foreach($lose_array as $value2): ?>
           <?php foreach($draw_array as $value3): ?>
+          <?php $game = $value1['ct']+$value2['ct']+$value3['ct']; ?>
           <tr>
-            <td><?php echo $value['year']; ?></td>
-            <td><?php echo $value['ct']; ?></td>
+            <td><?php echo $value1['year']; ?></td>
+            <td><?php echo $game; ?></td>
             <td><?php echo $value1['ct']; ?></td>
             <td><?php echo $value2['ct']; ?></td>
             <td><?php echo $value3['ct']; ?></td>
-            <td></td>
+            <td><?php echo $value1['ct']/$game; ?></td>
           </tr>
         <?php endforeach; ?>
         <?php endforeach; ?>
         <?php endforeach; ?>
-        <?php endforeach; ?>
         <?php endif; ?>
+
+        <table class="table" style ="background: white;">
+          <tr>
+            <th colspan="2">個人成績</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
