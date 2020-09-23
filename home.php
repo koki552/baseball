@@ -30,7 +30,7 @@ $res = $mysqli->query($sql);
 if($res) {
     $team_array = $res->fetch_assoc();
   }
-
+  
 
 // チーム成績表示
 // 勝ち数取得

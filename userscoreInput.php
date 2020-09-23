@@ -3,6 +3,7 @@
 session_start();
 
 $date = $_POST['date'];
+$_SESSION['date'] = $date;
 
 ?>
 
@@ -69,11 +70,200 @@ $date = $_POST['date'];
 
   <div class = "col-10">
     <h6>個人成績入力</h6>
-    <table class="table">    
+    <h7><?php echo $date; ?></h7>
+
+    <form action="confirmUscore.php" method="post" class="needs-validation" novalidate>
+    <table class="table">
+       <tr>
+        <th>打席</th>
+        <th>内容</th>
+        <th>盗塁</th>
+        <th>打点</th>
+       </tr>
+       <tr>
+        <td>1打席目</td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="bat_1">
+            <option value="">内容を選択</option>
+            <option value="一塁打">一塁打</option>
+            <option value="二塁打">二塁打</option>
+            <option value="三塁打">三塁打</option>
+            <option value="本塁打">本塁打</option>
+            <option value="犠打">犠打</option>
+            <option value="犠飛">犠飛</option>
+            <option value="四球">四球</option>
+            <option value="死球">死球</option>
+            <option value="三振">三振</option>
+            <option value="併殺打">併殺打</option>
+          </select>
+        </td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="sb_1">
+            <option value="">内容を選択</option>
+            <option value="無し">無し</option>
+            <option value="盗塁">盗塁</option>
+            <option value="盗塁刺">盗塁刺</option>
+          </select>
+        </td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="rbi_1">
+            <option value="">内容を選択</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </td>
+       </tr>
+       <tr>
+        <td>2打席目</td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="bat_2">
+            <option value="">内容を選択</option>
+            <option value="一塁打">一塁打</option>
+            <option value="二塁打">二塁打</option>
+            <option value="三塁打">三塁打</option>
+            <option value="本塁打">本塁打</option>
+            <option value="犠打">犠打</option>
+            <option value="犠飛">犠飛</option>
+            <option value="四球">四球</option>
+            <option value="死球">死球</option>
+            <option value="三振">三振</option>
+            <option value="併殺打">併殺打</option>
+          </select>
+        </td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="sb_2">
+            <option value="">内容を選択</option>
+            <option value="無し">無し</option>
+            <option value="盗塁">盗塁</option>
+            <option value="盗塁刺">盗塁刺</option>
+          </select>
+        </td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="rbi_2">
+            <option value="">内容を選択</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </td>
+       </tr>
+       <tr>
+        <td>3打席目</td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="bat_3">
+           <option value="">内容を選択</option>
+            <option value="一塁打">一塁打</option>
+            <option value="二塁打">二塁打</option>
+            <option value="三塁打">三塁打</option>
+            <option value="本塁打">本塁打</option>
+            <option value="犠打">犠打</option>
+            <option value="犠飛">犠飛</option>
+            <option value="四球">四球</option>
+            <option value="死球">死球</option>
+            <option value="三振">三振</option>
+            <option value="併殺打">併殺打</option>
+          </select>
+        </td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="sb_3">
+            <option value="">内容を選択</option>
+            <option value="無し">無し</option>
+            <option value="盗塁">盗塁</option>
+            <option value="盗塁刺">盗塁刺</option>
+          </select>
+        </td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="rbi_3">
+           <option value="">内容を選択</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </td>
+       </tr>
+       <tr>
+        <td>4打席目</td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="bat_4">
+            <option value="">内容を選択</option>
+            <option value="一塁打">一塁打</option>
+            <option value="二塁打">二塁打</option>
+            <option value="三塁打">三塁打</option>
+            <option value="本塁打">本塁打</option>
+            <option value="犠打">犠打</option>
+            <option value="犠飛">犠飛</option>
+            <option value="四球">四球</option>
+            <option value="死球">死球</option>
+            <option value="三振">三振</option>
+            <option value="併殺打">併殺打</option>
+           </select>
+        </td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="sb_4">
+            <option value="">内容を選択</option>
+            <option value="無し">無し</option>
+            <option value="盗塁">盗塁</option>
+            <option value="盗塁刺">盗塁刺</option>
+          </select>
+        </td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="rbi_4">
+            <option value="">内容を選択</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </td>
+       </tr>
+       <tr>
+        <td>5打席目</td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="bat_5">
+            <option value="">内容を選択</option>
+            <option value="一塁打">一塁打</option>
+            <option value="二塁打">二塁打</option>
+            <option value="三塁打">三塁打</option>
+            <option value="本塁打">本塁打</option>
+            <option value="犠打">犠打</option>
+            <option value="犠飛">犠飛</option>
+            <option value="四球">四球</option>
+            <option value="死球">死球</option>
+            <option value="三振">三振</option>
+            <option value="併殺打">併殺打</option>
+          </select>
+        </td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="sb_5">
+            <option value="">内容を選択</option>
+            <option value="無し">無し</option>
+            <option value="盗塁">盗塁</option>
+            <option value="盗塁刺">盗塁刺</option>
+          </select>
+        </td>
+        <td>
+          <select class="form-control" id="exampleFormControlSelect1" name="rbi_5">
+            <option value="">内容を選択</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </td>
+       </tr>
     </table>
+    <input type="submit" class="btn btn-outline-primary" name="btn_submit" value="登録">
+    </form>
   </div>
-
-
 
 
 <!-- sidebar -->

@@ -3,7 +3,24 @@
 // セッションの開始
 session_start();
 
-$_SESSION['teamid'];
+$_SESSION['date'];
+$_SESSION['bat_1'] = $_POST['bat_1'];
+$_SESSION['sb_1'] = $_POST['sb_1'];
+$_SESSION['rbi_1'] = $_POST['rbi_1'];
+$_SESSION['bat_2'] = $_POST['bat_2'];
+$_SESSION['sb_2'] = $_POST['sb_2'];
+$_SESSION['rbi_2'] = $_POST['rbi_2'];
+$_SESSION['bat_3'] = $_POST['bat_3'];
+$_SESSION['sb_3'] = $_POST['sb_3'];
+$_SESSION['rbi_3'] = $_POST['rbi_3'];
+$_SESSION['bat_4'] = $_POST['bat_4'];
+$_SESSION['sb_4'] = $_POST['sb_4'];
+$_SESSION['rbi_4'] = $_POST['rbi_4'];
+$_SESSION['bat_5'] = $_POST['bat_5'];
+$_SESSION['sb_5'] = $_POST['sb_5'];
+$_SESSION['rbi_5'] = $_POST['rbi_5'];
+
+$_SESSION['email'];
 
 ?>
 
@@ -84,55 +101,50 @@ $_SESSION['teamid'];
 <div class="container">
     <div class = "col-10">
         <br><h5 class="userpage">チーム成績 入力</h5><br>
-        <form action="confirmTscore.php" method="post" class="needs-validation" novalidate>
+        <form action="submitUscore.php" method="post" class="needs-validation" novalidate>
         
         <table class="table">
-          <tbody>
-            <tr>
-                <td><label for="date">日付</label></td>
-                <td colspan="4"><input type="date" class="form-control" id="lastName" name="date" placeholder="" value="" required></td>
-            </tr>
-            <tr>
-                <td><label for="opponent">対戦相手</label></td>
-                <td colspan="4"><input type="text" class="form-control" id="lastName" name="opponent" placeholder="" value="" required></td>
-                <div class="invalid-feedback"></div>
-            </tr>
-            <tr>
-                <td><label for="score">スコア</label></td>
-                <td>自軍</td>
-                <td>
-                    <select class="form-control" id="exampleFormControlSelect1" name="score" required>
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                  </select>
-                </td>
-                <td>対戦相手</td>
-                <td>
-                    <select class="form-control" id="exampleFormControlSelect1" name="Oscore" required>
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </td>
-          </tbody>  
+        <table class="table">
+       <tr>
+        <th>打席</th>
+        <th>内容</th>
+        <th>盗塁</th>
+        <th>打点</th>
+       </tr>
+       <tr>
+        <td>1打席目</td>
+        <td><?php echo $_SESSION['bat_1']; ?></td>
+        <td><?php echo $_SESSION['sb_1']; ?></td>
+        <td><?php echo $_SESSION['rbi_1']; ?></td>
+       </tr>
+       <tr>
+        <td>2打席目</td>
+        <td><?php echo $_SESSION['bat_2']; ?></td>
+        <td><?php echo $_SESSION['sb_2']; ?></td>
+        <td><?php echo $_SESSION['rbi_2']; ?></td>
+       </tr>
+       <tr>
+        <td>3打席目</td>
+        <td><?php echo $_SESSION['bat_3']; ?></td>
+        <td><?php echo $_SESSION['sb_3']; ?></td>
+        <td><?php echo $_SESSION['rbi_3']; ?></td>
+       </tr>
+       <tr>
+        <td>4打席目</td>
+        <td><?php echo $_SESSION['bat_4']; ?></td>
+        <td><?php echo $_SESSION['sb_4']; ?></td>
+        <td><?php echo $_SESSION['rbi_4']; ?></td>
+       </tr>
+       <tr>
+        <td>5打席目</td>
+        <td><?php echo $_SESSION['bat_5']; ?></td>
+        <td><?php echo $_SESSION['sb_5']; ?></td>
+        <td><?php echo $_SESSION['rbi_5']; ?></td>
+       </tr>
         </table>
+        <button type="button" class="btn btn-outline-secondary" onclick="history.back()">戻る</button>
         <input type="submit" class="btn btn-outline-primary" name="btn_submit" value="登録">
+    </form>
     
     </div>
 
