@@ -5,6 +5,35 @@ session_start();
 $date = $_POST['date'];
 $_SESSION['date'] = $date;
 
+$_SESSION['email'];
+
+// データベースの接続情報
+define( 'DB_HOST', 'localhost');
+define( 'DB_USER', 'root');
+define( 'DB_PASS', '');
+define( 'DB_NAME', 'baseball');
+
+// データベースに接続
+$mysqli = new mysqli( DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+$sql ="SELECT id, firstname, lastname, username, email, zip, state, address1, address2, password, team, status FROM user WHERE email ='".$_SESSION['email']."'";
+$res = $mysqli->query($sql);
+if($res) {
+    $user_array = $res->fetch_assoc();
+  }
+
+$sql = "SELECT id, date, opponent, score, Oscore, team_id, win FROM teamScore WHERE team_id = $user_array[team]";
+$res = $mysqli->query($sql);
+if($res) {
+    $teamScore_array = $res->fetch_assoc();
+  }
+
+if ($teamScore_array['date'] != $date) {
+  header("Location: ./notteam.php");
+}
+
+$mysqli->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +99,8 @@ $_SESSION['date'] = $date;
 
   <div class = "col-10">
     <h6>個人成績入力</h6>
-    <h7><?php echo $date; ?></h7>
+    <h7><?php echo $date; ?></h7><br>
+    <h7><?php echo $teamScore_array['opponent']; ?></h7>
 
     <form action="confirmUscore.php" method="post" class="needs-validation" novalidate>
     <table class="table">
@@ -84,7 +114,7 @@ $_SESSION['date'] = $date;
         <td>1打席目</td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="bat_1">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="一塁打">一塁打</option>
             <option value="二塁打">二塁打</option>
             <option value="三塁打">三塁打</option>
@@ -99,7 +129,7 @@ $_SESSION['date'] = $date;
         </td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="sb_1">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="無し">無し</option>
             <option value="盗塁">盗塁</option>
             <option value="盗塁刺">盗塁刺</option>
@@ -107,7 +137,7 @@ $_SESSION['date'] = $date;
         </td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="rbi_1">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -120,7 +150,7 @@ $_SESSION['date'] = $date;
         <td>2打席目</td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="bat_2">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="一塁打">一塁打</option>
             <option value="二塁打">二塁打</option>
             <option value="三塁打">三塁打</option>
@@ -135,7 +165,7 @@ $_SESSION['date'] = $date;
         </td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="sb_2">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="無し">無し</option>
             <option value="盗塁">盗塁</option>
             <option value="盗塁刺">盗塁刺</option>
@@ -143,7 +173,7 @@ $_SESSION['date'] = $date;
         </td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="rbi_2">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -156,7 +186,7 @@ $_SESSION['date'] = $date;
         <td>3打席目</td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="bat_3">
-           <option value="">内容を選択</option>
+           <option value="0">内容を選択</option>
             <option value="一塁打">一塁打</option>
             <option value="二塁打">二塁打</option>
             <option value="三塁打">三塁打</option>
@@ -171,7 +201,7 @@ $_SESSION['date'] = $date;
         </td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="sb_3">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="無し">無し</option>
             <option value="盗塁">盗塁</option>
             <option value="盗塁刺">盗塁刺</option>
@@ -179,7 +209,7 @@ $_SESSION['date'] = $date;
         </td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="rbi_3">
-           <option value="">内容を選択</option>
+           <option value="0">内容を選択</option>
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -192,7 +222,7 @@ $_SESSION['date'] = $date;
         <td>4打席目</td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="bat_4">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="一塁打">一塁打</option>
             <option value="二塁打">二塁打</option>
             <option value="三塁打">三塁打</option>
@@ -207,7 +237,7 @@ $_SESSION['date'] = $date;
         </td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="sb_4">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="無し">無し</option>
             <option value="盗塁">盗塁</option>
             <option value="盗塁刺">盗塁刺</option>
@@ -215,7 +245,7 @@ $_SESSION['date'] = $date;
         </td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="rbi_4">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -228,7 +258,7 @@ $_SESSION['date'] = $date;
         <td>5打席目</td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="bat_5">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="一塁打">一塁打</option>
             <option value="二塁打">二塁打</option>
             <option value="三塁打">三塁打</option>
@@ -243,7 +273,7 @@ $_SESSION['date'] = $date;
         </td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="sb_5">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="無し">無し</option>
             <option value="盗塁">盗塁</option>
             <option value="盗塁刺">盗塁刺</option>
@@ -251,7 +281,7 @@ $_SESSION['date'] = $date;
         </td>
         <td>
           <select class="form-control" id="exampleFormControlSelect1" name="rbi_5">
-            <option value="">内容を選択</option>
+            <option value="0">内容を選択</option>
             <option value="0">0</option>
             <option value="1">1</option>
             <option value="2">2</option>

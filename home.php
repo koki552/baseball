@@ -30,28 +30,15 @@ $res = $mysqli->query($sql);
 if($res) {
     $team_array = $res->fetch_assoc();
   }
-  
+
 
 // チーム成績表示
-// 勝ち数取得
-$sql ="SELECT DATE_FORMAT(date, '%Y') year, COUNT(*) ct FROM `teamScore` WHERE win = 1 and team_id = $user_array[team] GROUP BY CASE WHEN (win =1) THEN '勝ち' WHEN (win=2) THEN '負け' ELSE '引分' END, DATE_FORMAT(date, '%Y')";
+if( !empty( $team_array) ){
+$sql = "SELECT DATE_FORMAT(date, '%Y') year, COUNT(*) AS game, SUM(CASE WHEN win=1 THEN 1 ELSE 0 END) AS win, SUM(CASE WHEN win=2 THEN 1 ELSE 0 END) AS lose, SUM(CASE WHEN win=3 THEN 1 ELSE 0 END) AS draw FROM teamScore WHERE team_id = $team_array[id] GROUP BY DATE_FORMAT(date, '%Y')";
 $res = $mysqli->query($sql);
 if($res) {
   $win_array = $res->fetch_all(MYSQLI_ASSOC);
 }
-
-// 負け数取得
-$sql ="SELECT DATE_FORMAT(date, '%Y') year, COUNT(*) ct FROM `teamScore` WHERE win = 2 and team_id = $user_array[team] GROUP BY CASE WHEN (win =1) THEN '勝ち' WHEN (win=2) THEN '負け' ELSE '引分' END, DATE_FORMAT(date, '%Y')";
-$res = $mysqli->query($sql);
-if($res) {
-  $lose_array = $res->fetch_all(MYSQLI_ASSOC);
-}
-
-// 引分数取得
-$sql ="SELECT DATE_FORMAT(date, '%Y') year, COUNT(*) ct FROM `teamScore` WHERE win = 3 and team_id = $user_array[team] GROUP BY CASE WHEN (win =1) THEN '勝ち' WHEN (win=2) THEN '負け' ELSE '引分' END, DATE_FORMAT(date, '%Y')";
-$res = $mysqli->query($sql);
-if($res) {
-  $draw_array = $res->fetch_all(MYSQLI_ASSOC);
 }
 
 $mysqli->close();
@@ -94,8 +81,15 @@ $mysqli->close();
 
   <!-- Page Content -->
   <div class="container">
-  
+
+  <form method="POST" action="upimg.php" enctype="multipart/form-data">
+    <input type="file" name="upimg" accept="image/*">
+    <input type="submit">
+  </form>
+
+  <?php if( !empty( $team_array) ): ?>
   <h4 class="team"><?php echo $team_array['teamname']; ?></h4>
+  <?php endif; ?>
 
     <div class="row">
       <div class="col-6">
@@ -119,6 +113,7 @@ $mysqli->close();
             <?php endif; ?>
         </table>
       </div>
+      
       <div class="col-6">
         <table class="table" style ="background: white;">
          <tr>
@@ -136,21 +131,19 @@ $mysqli->close();
             <th>引分</th>
             <th>勝率</th>
           </tr>
-        <?php if(!empty($win_array) && !empty($lose_array) && !empty($draw_array)): ?>
-          <?php foreach($win_array as $value1): ?>
-          <?php foreach($lose_array as $value2): ?>
-          <?php foreach($draw_array as $value3): ?>
-          <?php $game = $value1['ct']+$value2['ct']+$value3['ct']; ?>
+        <?php if(!empty($win_array)): ?>
+          <?php foreach($win_array as $value): ?>
+          <?php $wps = number_format($value['win']/$value['game'], 3); 
+          $wp = ltrim($wps, '0');
+          ?>
           <tr>
-            <td><?php echo $value1['year']; ?></td>
-            <td><?php echo $game; ?></td>
-            <td><?php echo $value1['ct']; ?></td>
-            <td><?php echo $value2['ct']; ?></td>
-            <td><?php echo $value3['ct']; ?></td>
-            <td><?php echo $value1['ct']/$game; ?></td>
+            <td><?php echo $value['year']; ?></td>
+            <td><?php echo $value['game']; ?></td>
+            <td><?php echo $value['win']; ?></td>
+            <td><?php echo $value['lose']; ?></td>
+            <td><?php echo $value['draw']; ?></td>
+            <td><?php echo $wp; ?></td>
           </tr>
-        <?php endforeach; ?>
-        <?php endforeach; ?>
         <?php endforeach; ?>
         <?php endif; ?>
 
