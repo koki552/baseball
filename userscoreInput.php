@@ -1,4 +1,5 @@
 <?php
+
 // セッションの開始
 session_start();
 
@@ -29,7 +30,7 @@ if($res) {
   }
 
 if ($teamScore_array['date'] != $date) {
-  header("Location: ./notteam.php");
+  header("Location: ./notTeam.php");
 }
 
 $mysqli->close();

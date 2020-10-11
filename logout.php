@@ -1,10 +1,11 @@
 <?php
 session_start();
 $output = '';
+
 if (isset($_SESSION["email"])) {
-  header( "Location: http://localhost/baseball/home.php" ) ;
+  header( "Location: ./signup.php" ) ;
 } else {
-  header( "Location: http://localhost/baseball/home.php" ) ;
+  header( "Location: ./signup.php" ) ;
 }
 //セッション変数のクリア
 $_SESSION = array();
